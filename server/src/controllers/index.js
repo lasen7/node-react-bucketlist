@@ -1,5 +1,5 @@
-import * as api from './api';
+import * as account from './account';
 
 export {
-  api
+  account
 };

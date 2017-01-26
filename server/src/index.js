@@ -9,6 +9,9 @@ import session from 'express-session';
 import mongoose from 'mongoose';
 import connectMongo from 'connect-mongo';
 
+import passport from 'passport';
+import './passport';
+
 import api from './routes';
 
 const app = express();
@@ -32,6 +35,10 @@ app.use(session({
   })
 }));
 
+// using passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 // setup morgan
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
@@ -48,8 +55,9 @@ app.use((req, res, next) => {
 // handle error
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({
-    msg: err.message
+  res.status(err.code).json({
+    msg: err.message,
+    code: err.errorCode
   });
 });
 
