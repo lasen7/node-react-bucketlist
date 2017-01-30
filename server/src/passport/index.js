@@ -1,5 +1,6 @@
 import passport from 'passport';
 import './local';
+import './facebook';
 
 passport.serializeUser((user, done) => {
   console.log('serializeUser');

@@ -33,14 +33,29 @@ Account.statics.findUserByEmail = function (email) {
   return this.findOne({ 'common_profile.email': email }).exec();
 };
 
-Account.statics.addUser = function ({hash, username, fullname, gender, email}) {
+Account.statics.findUserByFacebookID = function (id) {
+  return this.findOne({ 'o_auth.facebook.id': id }).exec();
+};
+
+Account.statics.addUser = function ({type, hash, username, fullname, gender, email, id, access_token}) {
   let account = new this();
-  account.type = 'local';
+  account.type = type;
   account.password = hash;
   account.common_profile.username = username;
   account.common_profile.fullname = fullname;
   account.common_profile.gender = gender;
   account.common_profile.email = email;
+
+  if (type === 'facebook') {
+    account.o_auth.facebook.id = id;
+    account.o_auth.facebook.access_token = access_token;
+  }
+
+  if (type === 'google') {
+    account.o_auth.google.id = id;
+    account.o_auth.google.access_token = access_token;
+  }
+
   return account.save();
 };
 

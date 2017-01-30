@@ -10,7 +10,6 @@ import mongoose from 'mongoose';
 import connectMongo from 'connect-mongo';
 
 import passport from 'passport';
-import './passport';
 
 import api from './routes';
 
@@ -36,6 +35,7 @@ app.use(session({
 }));
 
 // using passport
+require('./passport');
 app.use(passport.initialize());
 app.use(passport.session());
 

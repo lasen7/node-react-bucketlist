@@ -85,3 +85,39 @@ export const getInfo = (req, res, next) => {
 
   res.send({ user });
 };
+
+export const success = (req, res, next) => {
+  // OAuth login success
+  // redirect to client-side routing
+  // console.log('OAuth login success', req.user);
+
+  // TODO: Set the redirect url
+  if (!req.user) {
+    return res.redirect('/auth/oauth-failure');
+  }
+
+  if (req.user.common_profile.username !== null) {
+    res.redirect('/auth/oauth-success');
+  } else {
+    res.redirect('/auth/register/additional-o');
+  }
+};
+
+/* facebook */
+
+export const facebook = (req, res, next) => {
+  passport.authenticate('facebook', {
+    scope: ['user_friends', 'email']
+  })(req, res, next);
+};
+
+export const facebookCallback = (req, res, next) => {
+  passport.authenticate('facebook', {
+    failureRedirect: '/api/account/failure'
+  })(req, res, next);
+};
+
+export const facebookCallbackSuccess = (req, res, next) => {
+  console.log('facebookCallbackSuccess');
+  res.redirect('/api/account/success');
+};

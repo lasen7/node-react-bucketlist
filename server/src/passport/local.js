@@ -37,6 +37,7 @@ passport.use(
         })
         .then(hash => {
           return Account.addUser({
+            type: 'local',
             hash,
             username,
             fullname: req.body.fullname,
