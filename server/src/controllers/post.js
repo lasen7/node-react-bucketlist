@@ -221,3 +221,50 @@ export const getPostCount = (req, res, next) => {
       next(err);
     });
 };
+
+/**
+ * Delete post
+ */
+export const deletePost = (req, res, next) => {
+  const validateParams = validateObjectId(req.params.postId);
+  if (!validateParams) {
+    return res.status(400).send({
+      msg: 'Invalid postId',
+      code: 2
+    });
+  }
+
+  if (!req.user) {
+    return res.status(401).send({
+      msg: 'Not authorized',
+      code: 1
+    });
+  }
+
+  Post.findPost(req.params.postId)
+    .then(post => {
+      if (!post) {
+        let error = new Error();
+        error.message = 'Not found resource';
+        error.code = 400;
+        error.errorCode = 3;
+        throw error;
+      }
+
+      if (post.writer !== req.user.common_profile.username) {
+        let error = new Error();
+        error.message = 'Not authorized';
+        error.code = 401;
+        error.errorCode = 1;
+        throw error;
+      }
+
+      Post.deletePost(req.params.postId);
+    })
+    .then(() => {
+      res.send({ msg: 'SUCCESS' });
+    })
+    .catch(err => {
+      next(err);
+    });
+};

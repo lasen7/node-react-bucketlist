@@ -8,5 +8,6 @@ const router = express.Router();
 router.post('/', multer.single('image'), post.writePost);
 router.put('/:postId', multer.single('image'), post.editPost);
 router.get('/:username/count', post.getPostCount);
+router.delete('/:postId', post.deletePost);
 
 export default router;

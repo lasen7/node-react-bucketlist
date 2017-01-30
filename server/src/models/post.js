@@ -37,5 +37,9 @@ Post.statics.getPostCountByUsername = function (username) {
   return this.count({ writer: username }).exec();
 };
 
+Post.statics.deletePost = function (id) {
+  return this.remove({ _id: id }).exec();
+}
+
 export default mongoose.model('Post', Post);
 
