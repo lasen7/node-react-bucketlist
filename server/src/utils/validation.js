@@ -61,3 +61,32 @@ export const validateSigninBody = (body) => {
 
   return inspector.validate(validation, body);
 };
+
+export const validateWritePostBody = (body) => {
+  const validation = {
+    type: 'object',
+    properties: {
+      image: {
+        type: 'object',
+        code: 1,
+        error: 'Invalid image'
+      },
+      description: {
+        type: 'string',
+        minLength: 1,
+        code: 2,
+        error: 'Invalid description'
+      },
+      latitude: {
+        type: 'string',
+        optional: true
+      },
+      longitude: {
+        type: 'string',
+        optional: true
+      }
+    }
+  };
+
+  return inspector.validate(validation, body);
+};

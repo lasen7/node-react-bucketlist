@@ -1,10 +1,12 @@
 import express from 'express';
 import { account } from '../controllers';
 
+import multer from '../utils/multerWrapper';
+
 const router = express.Router();
 
-router.post('/signup', account.signup);
-router.post('/signin', account.signin);
+router.post('/signup', multer.single(), account.signup);
+router.post('/signin', multer.single(), account.signin);
 router.post('/logout', account.logout);
 router.get('/getinfo', account.getInfo);
 

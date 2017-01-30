@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import express from 'express';
-import bodyParser from 'body-parser';
+//import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import session from 'express-session';
 
@@ -20,7 +20,7 @@ const MongoStore = connectMongo(session);
 
 /* SETUP MIDDLEWARE */
 
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
 app.use(session({
   secret: process.env.SECRET_KEY,
   resave: false,

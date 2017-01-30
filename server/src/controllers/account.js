@@ -6,7 +6,21 @@ import { validateSignupBody, validateSigninBody } from '../utils/validation';
  * body: { email, fullname, username, password, gender }
  */
 export const signup = (req, res, next) => {
-  const validate = validateSignupBody(req.body);
+  if (!req.body) {
+    return res.status(400).send({
+      msg: 'Invalid request'
+    });
+  }
+
+  const body = {
+    email: req.body.email,
+    fullname: req.body.fullname,
+    username: req.body.username,
+    password: req.body.password,
+    gender: req.body.gender
+  };
+
+  const validate = validateSignupBody(body);
   if (validate.error.length > 0) {
     return res.status(400).send({
       msg: validate.error[0].message,
@@ -36,7 +50,18 @@ export const signup = (req, res, next) => {
  * body: { username, password }
  */
 export const signin = (req, res, next) => {
-  const validate = validateSigninBody(req.body);
+  if (!req.body) {
+    return res.status(400).send({
+      msg: 'Invalid request'
+    });
+  }
+
+  const body = {
+    username: req.body.username,
+    password: req.body.password
+  };
+
+  const validate = validateSigninBody(body);
   if (validate.error.length > 0) {
     return res.status(400).send({
       msg: validate.error[0].message,
