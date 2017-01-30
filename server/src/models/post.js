@@ -25,5 +25,13 @@ Post.statics.writePost = function ({ accountId, image, description, latitude, lo
   return post.save();
 };
 
+Post.statics.findPost = function (id) {
+  return this.findOne({ _id: id }).exec();
+};
+
+Post.statics.editPost = function (id, params) {
+  return this.update({ _id: id }, params).exec();
+};
+
 export default mongoose.model('Post', Post);
 

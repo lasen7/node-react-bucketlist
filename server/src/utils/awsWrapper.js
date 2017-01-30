@@ -44,3 +44,30 @@ export const uploadToS3 = ({ path, name, contentType }) => {
     });
   });
 };
+
+export const deleteInS3 = (filename) => {
+  return new Promise((resolve, reject) => {
+    if (!filename) {
+      return reject(new Error('Some arguments is undefined'));
+    }
+
+    AWS.config.region = process.env.AWS_REGION;
+    AWS.config.accessKeyId = process.env.AWS_ACCESS_KEY;
+    AWS.config.secretAccessKey = process.env.AWS_SECRET_KEY;
+
+    const s3 = new AWS.S3();
+
+    const params = {
+      Bucket: bucketName,
+      Key: postFolder + '/' + filename,
+    };
+
+    s3.deleteObject(params, err => {
+      if (err) {
+        return reject(err);
+      }
+
+      resolve();
+    });
+  });
+};

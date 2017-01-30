@@ -6,5 +6,6 @@ import multer from '../utils/multerWrapper';
 const router = express.Router();
 
 router.post('/', multer.single('image'), post.writePost);
+router.put('/:postId', multer.single('image'), post.editPost);
 
 export default router;

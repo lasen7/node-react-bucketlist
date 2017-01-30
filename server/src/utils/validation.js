@@ -1,4 +1,9 @@
 import inspector from 'schema-inspector';
+import mongoose from 'mongoose';
+
+export const validateObjectId = (id) => {
+  return mongoose.Types.ObjectId.isValid(id);
+};
 
 export const validateSignupBody = (body) => {
   const validation = {
@@ -83,6 +88,33 @@ export const validateWritePostBody = (body) => {
       },
       longitude: {
         type: 'string',
+        optional: true
+      }
+    }
+  };
+
+  return inspector.validate(validation, body);
+};
+
+export const validateEditPostBody = (body) => {
+  const validation = {
+    type: 'object',
+    properties: {
+      image: {
+        type: 'object',
+        optional: true
+      },
+      description: {
+        type: 'string',
+        minLength: 1,
+        optional: true
+      },
+      latitude: {
+        type: 'number',
+        optional: true
+      },
+      longitude: {
+        type: 'number',
         optional: true
       }
     }
