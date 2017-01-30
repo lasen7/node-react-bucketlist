@@ -283,3 +283,91 @@ export const getPreview = (req, res, next) => {
       next(err);
     });
 };
+
+/**
+ * Like post
+ */
+export const likePost = (req, res, next) => {
+  const validateParams = validateObjectId(req.params.postId);
+  if (!validateParams) {
+    return res.status(400).send({
+      msg: 'Invalid request',
+      code: 2
+    });
+  }
+
+  if (!req.user) {
+    // if not log in
+    return res.status(401).send({
+      msg: 'Not authorized',
+      cde: 1
+    });
+  }
+
+  Post.findPost(req.params.postId)
+    .then(post => {
+      if (!post) {
+        let error = new Error();
+        error.message = 'Not found resource';
+        error.code = 400;
+        error.errorCode = 3;
+        throw error;
+      }
+
+      let index = post.likes.indexOf(req.user.common_profile.username);
+      if (index === -1) {
+        post.likes.push(req.user.common_profile.username);
+        post.save();
+      }
+    })
+    .then(() => {
+      res.send({ msg: 'SUCCESS' });
+    })
+    .catch(err => {
+      next(err);
+    });
+};
+
+/**
+ * Unlike post
+ */
+export const unlikePost = (req, res, next) => {
+  const validateParams = validateObjectId(req.params.postId);
+  if (!validateParams) {
+    return res.status(400).send({
+      msg: 'Invalid request',
+      code: 2
+    });
+  }
+
+  if (!req.user) {
+    // if not log in
+    return res.status(401).send({
+      msg: 'Not authorized',
+      cde: 1
+    });
+  }
+
+  Post.findPost(req.params.postId)
+    .then(post => {
+      if (!post) {
+        let error = new Error();
+        error.message = 'Not found resource';
+        error.code = 400;
+        error.errorCode = 3;
+        throw error;
+      }
+
+      let index = post.likes.indexOf(req.user.common_profile.username);
+      if (index > -1) {
+        post.likes.splice(index, 1);
+        post.save();
+      }
+    })
+    .then(() => {
+      res.send({ msg: 'SUCCESS' });
+    })
+    .catch(err => {
+      next(err);
+    });
+};
