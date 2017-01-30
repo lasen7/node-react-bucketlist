@@ -4,10 +4,9 @@ import fs from 'fs';
 import path from 'path';
 
 import { uploadToS3, deleteInS3 } from '../utils/awsWrapper';
-// const uploadToS3 = require('../utils/awsWrapper');
 
 /**
- * 게시물 작성하기
+ * Write post
  * body: { image, description, location }
  */
 export const writePost = (req, res, next) => {
@@ -50,7 +49,7 @@ export const writePost = (req, res, next) => {
   })
     .then(url => {
       Post.writePost({
-        accountId: req.user._id,
+        username: req.user.common_profile.username,
         image: url,
         description: body.description,
         latitude: body.latitude,
@@ -68,7 +67,7 @@ export const writePost = (req, res, next) => {
 };
 
 /**
- * 게시물 수정하기
+ * Edit post
  * body: { image, description, location }
  */
 export const editPost = (req, res, next) => {
@@ -128,7 +127,7 @@ export const editPost = (req, res, next) => {
           throw error;
         }
 
-        if (post.accountId.toString() !== req.user._id) {
+        if (post.writer !== req.user.common_profile.username) {
           let error = new Error();
           error.message = 'Not authorized';
           error.code = 401;
@@ -188,7 +187,7 @@ export const editPost = (req, res, next) => {
           throw error;
         }
 
-        if (post.accountId.toString() !== req.user._id) {
+        if (post.writer !== req.user.common_profile.username) {
           let error = new Error();
           error.message = 'Not authorized';
           error.code = 401;
@@ -205,4 +204,20 @@ export const editPost = (req, res, next) => {
         next(err);
       });
   }
+};
+
+/**
+ * Get post count
+ */
+export const getPostCount = (req, res, next) => {
+  Post.getPostCountByUsername(req.params.username)
+    .then(count => {
+      res.send({
+        msg: 'SUCCESS',
+        count: count
+      });
+    })
+    .catch(err => {
+      next(err);
+    });
 };
