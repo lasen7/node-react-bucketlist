@@ -41,5 +41,9 @@ Post.statics.deletePost = function (id) {
   return this.remove({ _id: id }).exec();
 }
 
+Post.statics.previewPost = function (username) {
+  return this.find({ writer: username }, { image: true, _id: 1 }).exec();
+}
+
 export default mongoose.model('Post', Post);
 

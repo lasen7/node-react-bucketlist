@@ -268,3 +268,18 @@ export const deletePost = (req, res, next) => {
       next(err);
     });
 };
+
+/**
+ * Preview post
+ */
+export const getPreview = (req, res, next) => {
+  Post.previewPost(req.params.username)
+    .then(posts => {
+      let result = { msg: 'SUCCESS' };
+      result.data = posts;
+      res.send(result);
+    })
+    .catch(err => {
+      next(err);
+    });
+};
