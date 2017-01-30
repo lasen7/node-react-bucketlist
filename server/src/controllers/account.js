@@ -86,6 +86,8 @@ export const getInfo = (req, res, next) => {
   res.send({ user });
 };
 
+/* OAuth common */
+
 export const success = (req, res, next) => {
   // OAuth login success
   // redirect to client-side routing
@@ -103,15 +105,21 @@ export const success = (req, res, next) => {
   }
 };
 
+export const failure = (req, res, next) => {
+  // TODO: when Oauth failure ...
+};
+
 /* facebook */
 
 export const facebook = (req, res, next) => {
+  console.log('facebook');
   passport.authenticate('facebook', {
     scope: ['user_friends', 'email']
   })(req, res, next);
 };
 
 export const facebookCallback = (req, res, next) => {
+  console.log('facebookCallback');
   passport.authenticate('facebook', {
     failureRedirect: '/api/account/failure'
   })(req, res, next);
@@ -119,5 +127,24 @@ export const facebookCallback = (req, res, next) => {
 
 export const facebookCallbackSuccess = (req, res, next) => {
   console.log('facebookCallbackSuccess');
+  res.redirect('/api/account/success');
+};
+
+/* google */
+
+export const google = (req, res, next) => {
+  passport.authenticate('google', {
+    scope: ['https://www.googleapis.com/auth/userinfo.profile', 'email']
+  })(req, res, next);
+};
+
+export const googleCallback = (req, res, next) => {
+  passport.authenticate('google', {
+    failureRedirect: '/api/account/failure'
+  })(req, res, next);
+};
+
+export const googleCallbackSuccess = (req, res, next) => {
+  console.log('googleCallbackSuccess');
   res.redirect('/api/account/success');
 };

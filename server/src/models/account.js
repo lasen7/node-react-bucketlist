@@ -37,6 +37,10 @@ Account.statics.findUserByFacebookID = function (id) {
   return this.findOne({ 'o_auth.facebook.id': id }).exec();
 };
 
+Account.statics.findUserByGoogleID = function (id) {
+  return this.findOne({ 'o_auth.google.id': id }).exec();
+};
+
 Account.statics.addUser = function ({type, hash, username, fullname, gender, email, id, access_token}) {
   let account = new this();
   account.type = type;

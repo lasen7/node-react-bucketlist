@@ -26,7 +26,7 @@ passport.use(
               type: 'facebook',
               username: null,
               gender: profile.gender,
-              fullname: profile.name.familyName + profile.name.giveName,
+              fullname: profile.name.familyName + profile.name.givenName,
               email: profile.emails ? (profile.emails.length > 0 ? profile.emails[0].value : null) : null,
               id: profile.id,
               access_token
