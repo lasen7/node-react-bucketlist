@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 
 const Post = new Schema({
-  accountId: { type: Schema.Types.ObjectId, ref: 'Account' },
+  writer: String,
   image: String,
   description: String,
   location: {
@@ -14,9 +14,9 @@ const Post = new Schema({
   comments: []
 });
 
-Post.statics.writePost = function ({ accountId, image, description, latitude, longitude }) {
+Post.statics.writePost = function ({ username, image, description, latitude, longitude }) {
   let post = new this();
-  post.accountId = accountId;
+  post.writer = username;
   post.image = image;
   post.description = description;
   post.location.latitude = latitude;
@@ -31,6 +31,10 @@ Post.statics.findPost = function (id) {
 
 Post.statics.editPost = function (id, params) {
   return this.update({ _id: id }, params).exec();
+};
+
+Post.statics.getPostCountByUsername = function (username) {
+  return this.count({ writer: username }).exec();
 };
 
 export default mongoose.model('Post', Post);
