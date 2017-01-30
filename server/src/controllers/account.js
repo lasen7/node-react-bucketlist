@@ -3,7 +3,7 @@ import { validateSignupBody, validateSigninBody } from '../utils/validation';
 
 /**
  * 회원가입
- * body: { email, fullname, username, password }
+ * body: { email, fullname, username, password, gender }
  */
 export const signup = (req, res, next) => {
   const validate = validateSignupBody(req.body);
