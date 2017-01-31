@@ -26,11 +26,11 @@ Post.statics.writePost = function ({ username, image, description, latitude, lon
   return post.save();
 };
 
-Post.statics.writeComment = function (id, writer, comment) {
+Post.statics.writeComment = function (id, accountId, comment) {
   return this.update({ _id: id }, {
     $push: {
       comments: {
-        $each: [{ writer, comment }]
+        $each: [{ accountId, comment }]
       }
     }
   }).exec();
@@ -50,11 +50,20 @@ Post.statics.getPostCountByUsername = function (username) {
 
 Post.statics.deletePost = function (id) {
   return this.remove({ _id: id }).exec();
-}
+};
 
 Post.statics.previewPost = function (username) {
   return this.find({ writer: username }, { image: true, _id: 1 }).exec();
-}
+};
+
+Post.statics.getComments = function (id) {
+  return this.findOne({ _id: id })
+    .populate('comments.accountId', 'common_profile.thumbnail common_profile.username')
+    .select({
+      comments: 1
+    })
+    .exec();
+};
 
 export default mongoose.model('Post', Post);
 

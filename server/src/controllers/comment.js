@@ -1,6 +1,10 @@
 import Post from '../models/post';
 import { validateObjectId, validateWriteCommentBody } from '../utils/validation';
 
+/**
+ * Write comment
+ * body: { comment }
+ */
 export const writeComment = (req, res, next) => {
   const validateParams = validateObjectId(req.params.postId);
   if (!validateParams) {
@@ -46,10 +50,42 @@ export const writeComment = (req, res, next) => {
         throw error;
       }
 
-      return Post.writeComment(req.params.postId, req.user.common_profile.username, body.comment);
+      return Post.writeComment(req.params.postId, req.user._id, body.comment);
     })
     .then(result => {
       res.send({ msg: 'SUCCESS' });
+    })
+    .catch(err => {
+      next(err);
+    });
+};
+
+/**
+ * Get all comments
+ */
+export const getComments = (req, res, next) => {
+  const validateParams = validateObjectId(req.params.postId);
+  if (!validateParams) {
+    return res.status(400).send({
+      msg: 'Invalid postId',
+      code: 1
+    });
+  }
+
+  Post.getComments(req.params.postId)
+    .then(post => {
+      if (!post) {
+        let error = new Error();
+        error.message = 'Not found resource';
+        error.code = 400;
+        error.errorCode = 2;
+        throw error;
+      }
+
+      let result = {};
+      result.msg = 'SUCCESS';
+      result.data = post.comments;
+      res.send(result);
     })
     .catch(err => {
       next(err);

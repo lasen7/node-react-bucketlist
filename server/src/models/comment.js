@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 
 const Comment = new Schema({
-  writer: String,
+  accountId: { type: Schema.Types.ObjectId, ref: 'Account' },
   comment: String,
   likes: [String],
   date: { type: Date, default: Date.now }
