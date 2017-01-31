@@ -50,3 +50,27 @@ export const getGoals = (req, res, next) => {
       next(err);
     });
 };
+
+export const getGoalCount = (req, res, next) => {
+
+  const getNotDoneGoalCount = (goals) => {
+    let notDoneGoals = goals.filter(goal => {
+      return goal.postId != null;
+    });
+
+    return notDoneGoals.length;
+  };
+
+  Goal.findGoal(req.params.username)
+    .then(goal => {
+      let result = {};
+      result.msg = 'SUCCESS';
+      result.total = goal ? goal.goals.length : 0;
+      result.done = goal ? getNotDoneGoalCount(goal.goals) : 0;
+
+      res.send(result);
+    })
+    .catch(err => {
+      next(err);
+    });
+};

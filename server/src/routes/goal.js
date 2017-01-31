@@ -7,5 +7,6 @@ const router = express.Router();
 
 router.post('/', multer.single(), goal.writeGoal);
 router.get('/:username', goal.getGoals);
+router.get('/:username/count', goal.getGoalCount);
 
 export default router;
