@@ -134,5 +134,84 @@ export const deleteGoal = (req, res, next) => {
     .catch(err => {
       next(err);
     });
+};
 
+export const editGoal = (req, res, next) => {
+  if (!req.body) {
+    return res.status(400).send({
+      msg: 'Invalid title',
+      code: 2
+    });
+  }
+
+  const body = {
+    title: req.body.title
+  };
+
+  const validate = validateWriteGoalBody(body);
+  if (validate.error.length > 0) {
+    return res.status(400).send({
+      msg: validate.error[0].message,
+      code: validate.error[0].code
+    });
+  }
+
+  const validateGoalId = validateObjectId(req.params.goalId);
+  if (!validateGoalId) {
+    return res.status(400).send({
+      msg: 'Invalid goalId',
+      code: 2
+    });
+  }
+
+  const validateGoalsId = validateObjectId(req.params.goalsId);
+  if (!validateGoalsId) {
+    return res.status(400).send({
+      msg: 'Invalid goalsId',
+      code: 3
+    });
+  }
+
+  if (!req.user) {
+    return res.status(401).send({
+      msg: 'Not authorized',
+      code: 1
+    });
+  }
+
+  Goal.findGoalById(req.params.goalId)
+    .then(goal => {
+      if (!goal) {
+        return res.status(400).send({
+          msg: 'Not found resource',
+          code: 4
+        });
+      }
+
+      if (goal.accountId.toString() !== req.user._id) {
+        return res.status(401).send({
+          msg: 'Not authorized',
+          code: 1
+        });
+      }
+
+      // find and edit goalId
+      let index = goal.goals.findIndex(goal => goal._id.toString() === req.params.goalsId);
+      if (index === -1) {
+        let error = new Error();
+        error.message = 'Not found resource';
+        error.code = 400;
+        error.errorCode = 5;
+        throw error;
+      }
+
+      goal.goals[index].title = body.title;
+      goal.save();
+    })
+    .then(() => {
+      res.send({ msg: 'SUCCESS' });
+    })
+    .catch(err => {
+      next(err);
+    });
 };
