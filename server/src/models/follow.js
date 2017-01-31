@@ -26,4 +26,8 @@ Follow.statics.getFollowerCount = function (followee) {
   return this.count({ followee }).exec();
 };
 
+Follow.statics.getFolloweeCount = function (follower) {
+  return this.count({ follower }).exec();
+};
+
 export default mongoose.model('Follow', Follow);
