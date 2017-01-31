@@ -1,6 +1,5 @@
 import { validateObjectId, validateWritePostBody, validateEditPostBody } from '../utils/validation';
 import Post from '../models/post';
-import Account from '../models/account';
 
 import fs from 'fs';
 import path from 'path';
@@ -51,6 +50,7 @@ export const writePost = (req, res, next) => {
   })
     .then(url => {
       Post.writePost({
+        accountId: req.user._id,
         username: req.user.common_profile.username,
         image: url,
         description: body.description,
@@ -374,6 +374,9 @@ export const unlikePost = (req, res, next) => {
     });
 };
 
+/**
+ * Get detail post
+ */
 export const getPost = (req, res, next) => {
   const validateParams = validateObjectId(req.params.postId);
   if (!validateParams) {
@@ -383,10 +386,7 @@ export const getPost = (req, res, next) => {
     });
   }
 
-  let result = {};
-  result.msg = 'SUCCESS';
-
-  Post.findPost(req.params.postId)
+  Post.getPostDetail(req.params.postId)
     .then(post => {
       if (!post) {
         let error = new Error();
@@ -396,22 +396,7 @@ export const getPost = (req, res, next) => {
         throw error;
       }
 
-      result.post = post;
-
-      return Account.findUser(post.writer);
-    })
-    .then(account => {
-      if (!account) {
-        let error = new Error();
-        error.message = 'Not found user';
-        error.code = 400;
-        error.errorCode = 3;
-        throw error;
-      }
-
-      result.common_profile = account.common_profile;
-
-      res.send(result);
+      res.send(post);
     })
     .catch(err => {
       next(err);

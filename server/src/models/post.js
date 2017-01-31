@@ -2,6 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 import Comment from './comment';
 
 const Post = new Schema({
+  accountId: { type: Schema.Types.ObjectId, ref: 'Account' },
   writer: String,
   image: String,
   description: String,
@@ -15,8 +16,9 @@ const Post = new Schema({
   comments: [Comment]
 });
 
-Post.statics.writePost = function ({ username, image, description, latitude, longitude }) {
+Post.statics.writePost = function ({ accountId, username, image, description, latitude, longitude }) {
   let post = new this();
+  post.accountId = accountId;
   post.writer = username;
   post.image = image;
   post.description = description;
@@ -62,6 +64,12 @@ Post.statics.getComments = function (id) {
     .select({
       comments: 1
     })
+    .exec();
+};
+
+Post.statics.getPostDetail = function (id) {
+  return this.findOne({ _id: id })
+    .populate('accountId', 'common_profile.thumbnail')
     .exec();
 };
 
