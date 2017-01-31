@@ -122,3 +122,53 @@ export const getFolloweeCount = (req, res, next) => {
       next(err);
     });
 };
+
+export const getFollowers = (req, res, next) => {
+  Account.findUser(req.params.username)
+    .then(account => {
+      if (!account) {
+        let error = new Error();
+        error.message = 'Not found user';
+        error.code = 400;
+        error.errorCode = 1;
+        throw error;
+      }
+
+      return Follow.findFollowers(account._id);
+    })
+    .then(followers => {
+      let result = {};
+      result.msg = 'SUCCESS';
+      result.data = followers;
+
+      res.send(result);
+    })
+    .catch(err => {
+      next(err);
+    });
+};
+
+export const getFollowees = (req, res, next) => {
+  Account.findUser(req.params.username)
+    .then(account => {
+      if (!account) {
+        let error = new Error();
+        error.message = 'Not found user';
+        error.code = 400;
+        error.errorCode = 1;
+        throw error;
+      }
+
+      return Follow.findFollowees(account._id);
+    })
+    .then(followees => {
+      let result = {};
+      result.msg = 'SUCCESS';
+      result.data = followees;
+
+      res.send(result);
+    })
+    .catch(err => {
+      next(err);
+    });
+};
