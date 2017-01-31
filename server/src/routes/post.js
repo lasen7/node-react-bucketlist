@@ -12,5 +12,6 @@ router.delete('/:postId', post.deletePost);
 router.get('/:username/preview', post.getPreview);
 router.put('/:postId/like', post.likePost);
 router.delete('/:postId/like', post.unlikePost);
+router.get('/:postId', post.getPost);
 
 export default router;

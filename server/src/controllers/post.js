@@ -1,5 +1,7 @@
 import { validateObjectId, validateWritePostBody, validateEditPostBody } from '../utils/validation';
 import Post from '../models/post';
+import Account from '../models/account';
+
 import fs from 'fs';
 import path from 'path';
 
@@ -366,6 +368,50 @@ export const unlikePost = (req, res, next) => {
     })
     .then(() => {
       res.send({ msg: 'SUCCESS' });
+    })
+    .catch(err => {
+      next(err);
+    });
+};
+
+export const getPost = (req, res, next) => {
+  const validateParams = validateObjectId(req.params.postId);
+  if (!validateParams) {
+    return res.status(400).send({
+      msg: 'Invalid postId',
+      code: 1
+    });
+  }
+
+  let result = {};
+  result.msg = 'SUCCESS';
+
+  Post.findPost(req.params.postId)
+    .then(post => {
+      if (!post) {
+        let error = new Error();
+        error.message = 'Not found resource';
+        error.code = 400;
+        error.errorCode = 2;
+        throw error;
+      }
+
+      result.post = post;
+
+      return Account.findUser(post.writer);
+    })
+    .then(account => {
+      if (!account) {
+        let error = new Error();
+        error.message = 'Not found user';
+        error.code = 400;
+        error.errorCode = 3;
+        throw error;
+      }
+
+      result.common_profile = account.common_profile;
+
+      res.send(result);
     })
     .catch(err => {
       next(err);
