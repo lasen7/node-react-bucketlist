@@ -10,6 +10,10 @@ const Goal = new Schema({
   }]
 });
 
+Goal.statics.findGoalById = function (id) {
+  return this.findOne({ _id: id }).exec();
+};
+
 Goal.statics.findGoal = function (username) {
   return this.findOne({ username }).exec();
 };

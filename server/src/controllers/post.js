@@ -36,7 +36,7 @@ export const writePost = (req, res, next) => {
     // if not log in
     return res.status(401).send({
       msg: 'Not authorized',
-      cde: 1
+      code: 1
     });
   }
 
@@ -107,7 +107,7 @@ export const editPost = (req, res, next) => {
     // if not log in
     return res.status(401).send({
       msg: 'Not authorized',
-      cde: 1
+      code: 1
     });
   }
 
@@ -302,7 +302,7 @@ export const likePost = (req, res, next) => {
     // if not log in
     return res.status(401).send({
       msg: 'Not authorized',
-      cde: 1
+      code: 1
     });
   }
 
@@ -346,7 +346,7 @@ export const unlikePost = (req, res, next) => {
     // if not log in
     return res.status(401).send({
       msg: 'Not authorized',
-      cde: 1
+      code: 1
     });
   }
 

@@ -5,7 +5,7 @@ export const follow = (req, res, next) => {
   if (!req.user) {
     return res.status(401).send({
       msg: 'Not authorized',
-      cde: 1
+      code: 1
     });
   }
 
@@ -42,7 +42,7 @@ export const unfollow = (req, res, next) => {
   if (!req.user) {
     return res.status(401).send({
       msg: 'Not authorized',
-      cde: 1
+      code: 1
     });
   }
 

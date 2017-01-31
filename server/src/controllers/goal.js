@@ -1,5 +1,5 @@
 import Goal from '../models/goal';
-import { validateWriteGoalBody } from '../utils/validation';
+import { validateWriteGoalBody, validateObjectId } from '../utils/validation';
 
 export const writeGoal = (req, res, next) => {
   if (!req.body) {
@@ -24,7 +24,7 @@ export const writeGoal = (req, res, next) => {
   if (!req.user) {
     return res.status(401).send({
       msg: 'Not authorized',
-      cde: 1
+      code: 1
     });
   }
 
@@ -73,4 +73,66 @@ export const getGoalCount = (req, res, next) => {
     .catch(err => {
       next(err);
     });
+};
+
+export const deleteGoal = (req, res, next) => {
+  const validateGoalId = validateObjectId(req.params.goalId);
+  if (!validateGoalId) {
+    return res.status(400).send({
+      msg: 'Invalid goalId',
+      code: 2
+    });
+  }
+
+  const validateGoalsId = validateObjectId(req.params.goalsId);
+  if (!validateGoalsId) {
+    return res.status(400).send({
+      msg: 'Invalid goalsId',
+      code: 3
+    });
+  }
+
+  if (!req.user) {
+    return res.status(401).send({
+      msg: 'Not authorized',
+      code: 1
+    });
+  }
+
+  Goal.findGoalById(req.params.goalId)
+    .then(goal => {
+      if (!goal) {
+        return res.status(400).send({
+          msg: 'Not found resource',
+          code: 4
+        });
+      }
+
+      if (goal.accountId.toString() !== req.user._id) {
+        return res.status(401).send({
+          msg: 'Not authorized',
+          code: 1
+        });
+      }
+
+      // find and remove goalId
+      let index = goal.goals.findIndex(goal => goal._id.toString() === req.params.goalsId);
+      if (index === -1) {
+        let error = new Error();
+        error.message = 'Not found resource';
+        error.code = 400;
+        error.errorCode = 5;
+        throw error;
+      }
+
+      goal.goals.splice(index, 1);
+      goal.save();
+    })
+    .then(() => {
+      res.send({ msg: 'SUCCESS' });
+    })
+    .catch(err => {
+      next(err);
+    });
+
 };

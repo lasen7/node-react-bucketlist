@@ -36,7 +36,7 @@ export const writeComment = (req, res, next) => {
   if (!req.user) {
     return res.status(401).send({
       msg: 'Not authorized',
-      cde: 3
+      code: 3
     });
   }
 
@@ -115,7 +115,7 @@ export const likeComment = (req, res, next) => {
   if (!req.user) {
     return res.status(401).send({
       msg: 'Not authorized',
-      cde: 1
+      code: 1
     });
   }
 
@@ -172,7 +172,7 @@ export const unlikeComment = (req, res, next) => {
   if (!req.user) {
     return res.status(401).send({
       msg: 'Not authorized',
-      cde: 1
+      code: 1
     });
   }
 
