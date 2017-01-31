@@ -4,6 +4,7 @@ import post from './post';
 import comment from './comment';
 import follow from './follow';
 import goal from './goal';
+import bookmark from './bookmark';
 
 const router = express.Router();
 
@@ -12,5 +13,6 @@ router.use('/post', post);
 router.use('/comment', comment);
 router.use('/follow', follow);
 router.use('/goal', goal);
+router.use('/bookmark', bookmark);
 
 export default router;
