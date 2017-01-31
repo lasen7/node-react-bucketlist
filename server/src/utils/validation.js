@@ -122,3 +122,19 @@ export const validateEditPostBody = (body) => {
 
   return inspector.validate(validation, body);
 };
+
+export const validateWriteCommentBody = (body) => {
+  const validation = {
+    type: 'object',
+    properties: {
+      comment: {
+        type: 'string',
+        minLength: 1,
+        code: 2,
+        error: 'Invalid comment'
+      }
+    }
+  };
+
+  return inspector.validate(validation, body);
+};

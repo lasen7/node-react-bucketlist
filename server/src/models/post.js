@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
+import Comment from './comment';
 
 const Post = new Schema({
   writer: String,
@@ -11,7 +12,7 @@ const Post = new Schema({
   tags: [String],
   date: { type: Date, default: Date.now },
   likes: [String],
-  comments: []
+  comments: [Comment]
 });
 
 Post.statics.writePost = function ({ username, image, description, latitude, longitude }) {
@@ -23,6 +24,16 @@ Post.statics.writePost = function ({ username, image, description, latitude, lon
   post.location.longitude = longitude;
 
   return post.save();
+};
+
+Post.statics.writeComment = function (id, writer, comment) {
+  return this.update({ _id: id }, {
+    $push: {
+      comments: {
+        $each: [{ writer, comment }]
+      }
+    }
+  }).exec();
 };
 
 Post.statics.findPost = function (id) {
