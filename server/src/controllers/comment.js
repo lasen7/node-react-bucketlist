@@ -91,3 +91,120 @@ export const getComments = (req, res, next) => {
       next(err);
     });
 };
+
+/**
+ * Like comment
+ */
+export const likeComment = (req, res, next) => {
+  const validatePostId = validateObjectId(req.params.postId);
+  if (!validatePostId) {
+    return res.status(400).send({
+      msg: 'Invalid postId',
+      code: 2
+    });
+  }
+
+  const validatecommentId = validateObjectId(req.params.commentId);
+  if (!validatecommentId) {
+    return res.status(400).send({
+      msg: 'Invalid commentId',
+      code: 3
+    });
+  }
+
+  if (!req.user) {
+    return res.status(401).send({
+      msg: 'Not authorized',
+      cde: 1
+    });
+  }
+
+  Post.findPost(req.params.postId)
+    .then(post => {
+      if (!post) {
+        let error = new Error();
+        error.message = 'Not found post';
+        error.code = 400;
+        error.errorCode = 4;
+        throw error;
+      }
+
+      let finded = post.comments.find(comment => comment._id.toString() === req.params.commentId);
+      if (!finded) {
+        let error = new Error();
+        error.message = 'Not found comment';
+        error.code = 400;
+        error.errorCode = 5;
+        throw error;
+      }
+
+      let index = finded.likes.indexOf(req.user.common_profile.username);
+      if (index === -1) {
+        finded.likes.push(req.user.common_profile.username);
+        post.save();
+      }
+    })
+    .then(() => {
+      res.send({ msg: 'SUCCESS' });
+    })
+    .catch(err => {
+      next(err);
+    });
+};
+
+export const unlikeComment = (req, res, next) => {
+  const validatePostId = validateObjectId(req.params.postId);
+  if (!validatePostId) {
+    return res.status(400).send({
+      msg: 'Invalid postId',
+      code: 2
+    });
+  }
+
+  const validatecommentId = validateObjectId(req.params.commentId);
+  if (!validatecommentId) {
+    return res.status(400).send({
+      msg: 'Invalid commentId',
+      code: 3
+    });
+  }
+
+  if (!req.user) {
+    return res.status(401).send({
+      msg: 'Not authorized',
+      cde: 1
+    });
+  }
+
+  Post.findPost(req.params.postId)
+    .then(post => {
+      if (!post) {
+        let error = new Error();
+        error.message = 'Not found post';
+        error.code = 400;
+        error.errorCode = 4;
+        throw error;
+      }
+
+      let finded = post.comments.find(comment => comment._id.toString() === req.params.commentId);
+      if (!finded) {
+        let error = new Error();
+        error.message = 'Not found comment';
+        error.code = 400;
+        error.errorCode = 5;
+        throw error;
+      }
+
+      let index = finded.likes.indexOf(req.user.common_profile.username);
+      if (index > -1) {
+        finded.likes.splice(index, 1);
+        post.save();
+      }
+    })
+    .then(() => {
+      res.send({ msg: 'SUCCESS' });
+    })
+    .catch(err => {
+      next(err);
+    });
+};
