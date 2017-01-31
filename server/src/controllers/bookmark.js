@@ -92,3 +92,17 @@ export const unlikeBookmark = (req, res, next) => {
       next(err);
     });
 };
+
+export const getBookmarks = (req, res, next) => {
+  Bookmark.getBookmarks(req.params.username)
+    .then(bookmark => {
+      let result = {};
+      result.msg = 'SUCCESS';
+      result.data = bookmark ? bookmark.posts : [];
+
+      res.send(result);
+    })
+    .catch(err => {
+      next(err);
+    });
+};
