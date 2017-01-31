@@ -80,3 +80,24 @@ export const unfollow = (req, res, next) => {
       next(err);
     });
 };
+
+export const getFollowerCount = (req, res, next) => {
+  Account.findUser(req.params.username)
+    .then(account => {
+      if (!account) {
+        let error = new Error();
+        error.message = 'Not found user';
+        error.code = 400;
+        error.errorCode = 1;
+        throw error;
+      }
+
+      return Follow.getFollowerCount(account._id);
+    })
+    .then(count => {
+      res.send({ msg: 'SUCCESS', count });
+    })
+    .catch(err => {
+      next(err);
+    });
+};

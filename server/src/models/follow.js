@@ -22,4 +22,8 @@ Follow.statics.deleteFollow = function (followee, follower) {
   return this.remove({ followee, follower }).exec();
 };
 
+Follow.statics.getFollowerCount = function (followee) {
+  return this.count({ followee }).exec();
+};
+
 export default mongoose.model('Follow', Follow);
