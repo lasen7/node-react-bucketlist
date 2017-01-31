@@ -4,6 +4,7 @@ import * as comment from './comment';
 import * as follow from './follow';
 import * as goal from './goal';
 import * as bookmark from './bookmark';
+import * as notice from './notice';
 
 export {
   account,
@@ -11,5 +12,6 @@ export {
   comment,
   follow,
   goal,
-  bookmark
+  bookmark,
+  notice
 };

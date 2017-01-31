@@ -1,5 +1,6 @@
 import Follow from '../models/follow';
 import Account from '../models/account';
+import Notice from '../models/notice';
 
 export const follow = (req, res, next) => {
   if (!req.user) {
@@ -28,6 +29,7 @@ export const follow = (req, res, next) => {
     .then(follow => {
       if (!follow) {
         Follow.addFollow(_account._id, req.user._id);
+        Notice.addFollow(_account._id, req.user._id);
       }
     })
     .then(() => {
