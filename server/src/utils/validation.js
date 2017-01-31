@@ -138,3 +138,19 @@ export const validateWriteCommentBody = (body) => {
 
   return inspector.validate(validation, body);
 };
+
+export const validateWriteGoalBody = (body) => {
+  const validation = {
+    type: 'object',
+    properties: {
+      title: {
+        type: 'string',
+        minLength: 1,
+        code: 2,
+        error: 'Invalid title'
+      }
+    }
+  };
+
+  return inspector.validate(validation, body);
+};

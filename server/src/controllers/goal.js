@@ -1,0 +1,38 @@
+import Goal from '../models/goal';
+import { validateWriteGoalBody } from '../utils/validation';
+
+export const writeGoal = (req, res, next) => {
+  if (!req.body) {
+    return res.status(400).send({
+      msg: 'Invalid title',
+      code: 2
+    });
+  }
+
+  const body = {
+    title: req.body.title
+  };
+
+  const validate = validateWriteGoalBody(body);
+  if (validate.error.length > 0) {
+    return res.status(400).send({
+      msg: validate.error[0].message,
+      code: validate.error[0].code
+    });
+  }
+
+  if (!req.user) {
+    return res.status(401).send({
+      msg: 'Not authorized',
+      cde: 1
+    });
+  }
+
+  Goal.writeGoal(req.user._id, body.title)
+    .then(() => {
+      res.send({ msg: 'SUCCESS' });
+    })
+    .catch(err => {
+      next(err);
+    });
+};
