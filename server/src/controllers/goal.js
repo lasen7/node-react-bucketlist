@@ -28,9 +28,23 @@ export const writeGoal = (req, res, next) => {
     });
   }
 
-  Goal.writeGoal(req.user._id, body.title)
+  Goal.writeGoal(req.user._id, req.user.common_profile.username, body.title)
     .then(() => {
       res.send({ msg: 'SUCCESS' });
+    })
+    .catch(err => {
+      next(err);
+    });
+};
+
+export const getGoals = (req, res, next) => {
+  Goal.findGoal(req.params.username)
+    .then(goal => {
+      let result = {};
+      result.msg = 'SUCCESS';
+      result.data = goal ? goal.goals : [];
+
+      res.send(result);
     })
     .catch(err => {
       next(err);
