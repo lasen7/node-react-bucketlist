@@ -25,4 +25,17 @@ Bookmark.statics.getBookmarks = function (username) {
     .exec();
 };
 
+Bookmark.statics.getBookmarkCount = function (username) {
+  return this.aggregate([
+    { $match: { username } },
+    { $unwind: '$posts' },
+    {
+      $group: {
+        _id: null,
+        count: { $sum: 1 }
+      }
+    }
+  ]).exec();
+};
+
 export default mongoose.model('Bookmark', Bookmark);

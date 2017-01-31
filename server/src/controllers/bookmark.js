@@ -106,3 +106,17 @@ export const getBookmarks = (req, res, next) => {
       next(err);
     });
 };
+
+export const getBookmarkCount = (req, res, next) => {
+  Bookmark.getBookmarkCount(req.params.username)
+    .then(bookmark => {
+      let result = {};
+      result.msg = 'SUCCESS';
+      result.count = bookmark.length === 0 ? 0 : bookmark[0].count;
+
+      res.send(result);
+    })
+    .catch(err => {
+      next(err);
+    });
+};
