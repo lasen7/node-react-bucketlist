@@ -74,5 +74,19 @@ Post.statics.getPostDetail = function (id) {
     .exec();
 };
 
+Post.statics.findPostsByHashtag = function (hashtag) {
+  return this.aggregate([
+    { $match: { tags: { $regex: hashtag } } },
+    { $unwind: '$tags' },
+    {
+      $group: {
+        _id: { tag: '$tags' },
+        count: { $sum: 1 }
+      }
+    },
+    { $match: { '_id.tag': { $regex: hashtag } } }
+  ]).exec();
+};
+
 export default mongoose.model('Post', Post);
 

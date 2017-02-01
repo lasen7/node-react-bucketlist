@@ -6,6 +6,7 @@ import * as goal from './goal';
 import * as bookmark from './bookmark';
 import * as notice from './notice';
 import * as report from './report';
+import * as tag from './tag';
 
 export {
   account,
@@ -15,5 +16,6 @@ export {
   goal,
   bookmark,
   notice,
-  report
+  report,
+  tag
 };
