@@ -88,5 +88,13 @@ Post.statics.findPostsByHashtag = function (hashtag) {
   ]).exec();
 };
 
+Post.statics.getPosts = function () {
+  return this.find({})
+    .populate('accountId', 'common_profile.thumbnail')
+    .limit(10)
+    .sort({ date: -1 })
+    .exec();
+};
+
 export default mongoose.model('Post', Post);
 

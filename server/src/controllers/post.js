@@ -10,6 +10,8 @@ import findHashtags from 'find-hashtags';
 
 import { uploadToS3, deleteInS3 } from '../utils/awsWrapper';
 
+
+
 /**
  * Write post
  * body: { image, description, location }
@@ -423,41 +425,79 @@ export const getPost = (req, res, next) => {
         throw error;
       }
 
-      _post = post;
-
-      // combine a result
-      result.writer = post.writer;
-
-      result.common_profile = {
-        thumbnail: post.accountId.common_profile.thumbnail
-      };
-
-      result.post = {
-        image: post.image,
-        description: post.description,
-        date: post.date,
-        likes: post.likes
-      };
-
-      result.comment_count = post.comments.length;
-
-      return Bookmark.findBookmarkById(req.user._id, req.params.postId);
+      return combineResult(post, req);
     })
+    .then(result => {
+      res.send(result);
+    })
+    .catch(err => {
+      next(err);
+    });
+};
+
+export const getPosts = async (req, res, next) => {
+  let queryString = req.query.q;
+  if (!queryString) {
+    return res.status(400).send({
+      msg: 'Invalid query string',
+      code: 1
+    });
+  }
+
+  let datas = [];
+
+  try {
+    const posts = await Post.getPosts();
+
+    for (let post of posts) {
+      const data = await combineResult(post, req);
+      datas.push(data);
+    }
+
+    res.send({ msg: 'SUCCESS', data: datas });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * This function combine post, bookmark and follow
+ */
+const combineResult = (post, req) => {
+  // combine a result
+  let result = {};
+  result._id = post._id;
+  result.writer = post.writer;
+
+  result.common_profile = {
+    thumbnail: post.accountId.common_profile.thumbnail
+  };
+
+  result.post = {
+    image: post.image,
+    description: post.description,
+    date: post.date,
+    likes: post.likes
+  };
+
+  result.comment_count = post.comments.length;
+
+  return Bookmark.findBookmarkById(req.user._id, req.params.postId)
     .then(bookmark => {
       result.bookmark = bookmark ? true : false;
 
-      return Follow.findFollow(_post.accountId._id, req.user._id);
+      return Follow.findFollow(post.accountId._id, req.user._id);
     })
     .then(follow => {
       result.follow = follow ? true : false;
 
       // own post
-      if (_post.accountId._id.toString() === req.user._id)
+      if (post.accountId._id.toString() === req.user._id)
         result.follow = true;
 
-      res.send(result);
+      return result;
     })
     .catch(err => {
-      next(err);
+      throw err;
     });
 };
