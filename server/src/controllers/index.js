@@ -5,6 +5,7 @@ import * as follow from './follow';
 import * as goal from './goal';
 import * as bookmark from './bookmark';
 import * as notice from './notice';
+import * as report from './report';
 
 export {
   account,
@@ -13,5 +14,6 @@ export {
   follow,
   goal,
   bookmark,
-  notice
+  notice,
+  report
 };

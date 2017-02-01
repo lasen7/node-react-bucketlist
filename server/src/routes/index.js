@@ -6,6 +6,7 @@ import follow from './follow';
 import goal from './goal';
 import bookmark from './bookmark';
 import notice from './notice';
+import report from './report';
 
 const router = express.Router();
 
@@ -16,5 +17,6 @@ router.use('/follow', follow);
 router.use('/goal', goal);
 router.use('/bookmark', bookmark);
 router.use('/notice', notice);
+router.use('/report', report);
 
 export default router;
