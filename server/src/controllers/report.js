@@ -130,3 +130,47 @@ export const reviewPost = (req, res, next) => {
       next(err);
     });
 };
+
+export const blockUser = (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).send({
+      msg: 'Not authorized',
+      code: 1
+    });
+  }
+
+  Account.findUser(req.user.common_profile.username)
+    .then(account => {
+      if (!account) {
+        let error = new Error();
+        error.message = 'Not found user';
+        error.code = 400;
+        error.errorCode = 2;
+        throw error;
+      }
+
+      if (!account.admin) {
+        let error = new Error();
+        error.message = 'Not authorized';
+        error.code = 401;
+        error.errorCode = 1;
+        throw error;
+      }
+
+      return Account.blockUser(req.params.username);
+    })
+    .then(result => {
+      if (result.n === 0) {
+        let error = new Error();
+        error.message = 'Not found user';
+        error.code = 400;
+        error.errorCode = 3;
+        throw error;
+      }
+
+      res.send({ msg: 'SUCCESS' });
+    })
+    .catch(err => {
+      next(err);
+    });
+};

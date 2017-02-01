@@ -67,5 +67,11 @@ Account.statics.addUser = function ({type, hash, username, fullname, gender, ema
   return account.save();
 };
 
+Account.statics.blockUser = function (username) {
+  return this.update({ 'common_profile.username': username }, {
+    status: 'block'
+  }).exec();
+};
+
 export default mongoose.model('Account', Account);
 
