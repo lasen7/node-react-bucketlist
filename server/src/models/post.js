@@ -136,5 +136,17 @@ Post.statics.getPostsHashtag = function (hashtag) {
     .exec();
 };
 
+Post.statics.getPostsHashtagByType = function (id, type, hashtag) {
+  let option = {
+    _id: (type === 'new') ? { $gt: id } : { $lt: id }
+  };
+
+  return this.find({ $and: [{ tags: hashtag }, option] })
+    .populate('accountId', 'common_profile.thumbnail')
+    .limit(7)
+    .sort({ _id: -1 })
+    .exec();
+};
+
 export default mongoose.model('Post', Post);
 
