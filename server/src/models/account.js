@@ -2,6 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 
 const type = "local facebook google".split(' ');
 const gender = "male female hidden".split(' ');
+const status = "normal block".split(' ');
 
 const Account = new Schema({
   type: { type: String, enum: type },
@@ -22,7 +23,10 @@ const Account = new Schema({
       id: String,
       access_token: String
     }
-  }
+  },
+  admin: { type: Boolean, default: false },
+  report: { type: Number, default: 0 },
+  status: { type: String, enum: status, default: 'normal' }
 });
 
 Account.statics.findUser = function (username) {

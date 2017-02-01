@@ -16,4 +16,12 @@ Report.statics.reportPost = function (postId) {
   return report.save();
 };
 
+Report.statics.findReportsNotReviewed = function () {
+  return this.find({
+    review: {
+      $ne: true
+    }
+  }).exec();
+};
+
 export default mongoose.model('Report', Report);

@@ -1,5 +1,6 @@
 import { validateObjectId } from '../utils/validation';
 import Report from '../models/report';
+import Account from '../models/account';
 
 export const reportPost = (req, res, next) => {
   const validateParams = validateObjectId(req.params.postId);
@@ -28,6 +29,46 @@ export const reportPost = (req, res, next) => {
     })
     .then(() => {
       res.send({ msg: 'SUCCESS' });
+    })
+    .catch(err => {
+      next(err);
+    });
+};
+
+export const getReportedPosts = (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).send({
+      msg: 'Not authorized',
+      code: 1
+    });
+  }
+
+  Account.findUser(req.user.common_profile.username)
+    .then(account => {
+      if (!account) {
+        let error = new Error();
+        error.message = 'Not found user';
+        error.code = 400;
+        error.errorCode = 2;
+        throw error;
+      }
+
+      if (!account.admin) {
+        let error = new Error();
+        error.message = 'Not authorized';
+        error.code = 401;
+        error.errorCode = 1;
+        throw error;
+      }
+
+      return Report.findReportsNotReviewed();
+    })
+    .then(reports => {
+      let result = {};
+      result.msg = 'SUCCESS';
+      result.data = reports;
+
+      res.send(result);
     })
     .catch(err => {
       next(err);
