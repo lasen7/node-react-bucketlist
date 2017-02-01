@@ -91,7 +91,19 @@ Post.statics.findPostsByHashtag = function (hashtag) {
 Post.statics.getPosts = function () {
   return this.find({})
     .populate('accountId', 'common_profile.thumbnail')
-    .limit(10)
+    .limit(7)
+    .sort({ date: -1 })
+    .exec();
+};
+
+Post.statics.getPostsByType = function (id, type) {
+  let option = {
+    _id: (type === 'new') ? { $gt: id } : { $lt: id }
+  };
+
+  return this.find(option)
+    .populate('accountId', 'common_profile.thumbnail')
+    .limit(7)
     .sort({ date: -1 })
     .exec();
 };

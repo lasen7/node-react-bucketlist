@@ -435,7 +435,7 @@ export const getPost = (req, res, next) => {
     });
 };
 
-export const getPosts = async (req, res, next) => {
+export const handleGetPosts = (req, res, next) => {
   let queryString = req.query.q;
   if (!queryString) {
     return res.status(400).send({
@@ -444,19 +444,76 @@ export const getPosts = async (req, res, next) => {
     });
   }
 
-  let datas = [];
+  if (!req.user) {
+    return res.status(401).send({
+      msg: 'Not authorized',
+      code: 2
+    });
+  }
 
-  try {
-    const posts = await Post.getPosts();
+  switch (queryString) {
+    case 'feed':
+      getPostsFeed(req, res, next);
+      break;
+    case 'friend':
+      break;
+    case 'tag':
+      break;
+    default:
+      return res.status(400).send({
+        msg: 'Invalid query string',
+        code: 1
+      });
+  }
+};
 
-    for (let post of posts) {
-      const data = await combineResult(post, req);
-      datas.push(data);
-    }
+export const handleGetPostsByType = async (req, res, next) => {
+  const listType = req.params.listType;
+  const postId = req.params.postId;
+  let queryString = req.query.q;
 
-    res.send({ msg: 'SUCCESS', data: datas });
-  } catch (err) {
-    next(err);
+  if (!queryString) {
+    return res.status(400).send({
+      msg: 'Invalid query string',
+      code: 1
+    });
+  }
+
+  if (listType !== 'old' && listType !== 'new') {
+    return res.status(400).json({
+      error: 'Invalid list type',
+      code: 2
+    });
+  }
+
+  const validateParams = validateObjectId(postId);
+  if (!validateParams) {
+    return res.status(400).send({
+      msg: 'Invalid postId',
+      code: 1
+    });
+  }
+
+  if (!req.user) {
+    return res.status(401).send({
+      msg: 'Not authorized',
+      code: 3
+    });
+  }
+
+  switch (queryString) {
+    case 'feed':
+      getPostsFeedByType(req, res, next);
+      break;
+    case 'friend':
+      break;
+    case 'tag':
+      break;
+    default:
+      return res.status(400).send({
+        msg: 'Invalid query string',
+        code: 4
+      });
   }
 };
 
@@ -500,4 +557,41 @@ const combineResult = (post, req) => {
     .catch(err => {
       throw err;
     });
+};
+
+const getPostsFeed = async (req, res, next) => {
+  let datas = [];
+
+  try {
+    const posts = await Post.getPosts();
+
+    for (let post of posts) {
+      const data = await combineResult(post, req);
+      datas.push(data);
+    }
+
+    res.send({ msg: 'SUCCESS', data: datas });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getPostsFeedByType = async (req, res, next) => {
+  const listType = req.params.listType;
+  const postId = req.params.postId;
+
+  let datas = [];
+
+  try {
+    const posts = await Post.getPostsByType(postId, listType);
+
+    for (let post of posts) {
+      const data = await combineResult(post, req);
+      datas.push(data);
+    }
+
+    res.send({ msg: 'SUCCESS', data: datas });
+  } catch (err) {
+    next(err);
+  }
 };

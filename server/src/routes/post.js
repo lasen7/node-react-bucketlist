@@ -5,7 +5,8 @@ import multer from '../utils/multerWrapper';
 
 const router = express.Router();
 
-router.get('/', post.getPosts);
+router.get('/', post.handleGetPosts);
+router.get('/:listType/:postId', post.handleGetPostsByType);
 router.get('/:username/count', post.getPostCount);
 router.get('/:username/preview', post.getPreview);
 router.get('/:postId', post.getPost);
