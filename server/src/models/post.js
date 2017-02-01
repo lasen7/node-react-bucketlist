@@ -88,15 +88,15 @@ Post.statics.findPostsByHashtag = function (hashtag) {
   ]).exec();
 };
 
-Post.statics.getPosts = function () {
+Post.statics.getPostsFeed = function () {
   return this.find({})
     .populate('accountId', 'common_profile.thumbnail')
     .limit(7)
-    .sort({ date: -1 })
+    .sort({ _id: -1 })
     .exec();
 };
 
-Post.statics.getPostsByType = function (id, type) {
+Post.statics.getPostsFeedByType = function (id, type) {
   let option = {
     _id: (type === 'new') ? { $gt: id } : { $lt: id }
   };
@@ -104,7 +104,15 @@ Post.statics.getPostsByType = function (id, type) {
   return this.find(option)
     .populate('accountId', 'common_profile.thumbnail')
     .limit(7)
-    .sort({ date: -1 })
+    .sort({ _id: -1 })
+    .exec();
+};
+
+Post.statics.getPostsFriend = function (followees) {
+  return this.find({ writer: { $in: followees } })
+    .populate('accountId', 'common_profile.thumbnail')
+    .limit(7)
+    .sort({ _id: -1 })
     .exec();
 };
 

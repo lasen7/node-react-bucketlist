@@ -456,6 +456,7 @@ export const handleGetPosts = (req, res, next) => {
       getPostsFeed(req, res, next);
       break;
     case 'friend':
+      getPostsFriend(req, res, next);
       break;
     case 'tag':
       break;
@@ -563,7 +564,7 @@ const getPostsFeed = async (req, res, next) => {
   let datas = [];
 
   try {
-    const posts = await Post.getPosts();
+    const posts = await Post.getPostsFeed();
 
     for (let post of posts) {
       const data = await combineResult(post, req);
@@ -583,7 +584,29 @@ const getPostsFeedByType = async (req, res, next) => {
   let datas = [];
 
   try {
-    const posts = await Post.getPostsByType(postId, listType);
+    const posts = await Post.getPostsFeedByType(postId, listType);
+
+    for (let post of posts) {
+      const data = await combineResult(post, req);
+      datas.push(data);
+    }
+
+    res.send({ msg: 'SUCCESS', data: datas });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getPostsFriend = async (req, res, next) => {
+  let datas = [];
+
+  try {
+    const followees = await Follow.findFollowees(req.user._id);
+    const followeeNames = followees.map((followee, index) => {
+      return followee.followee.common_profile.username;
+    });
+
+    const posts = await Post.getPostsFriend(followeeNames);
 
     for (let post of posts) {
       const data = await combineResult(post, req);
