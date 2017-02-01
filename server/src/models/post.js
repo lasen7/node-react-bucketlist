@@ -128,5 +128,13 @@ Post.statics.getPostsFriendByType = function (id, type, followees) {
     .exec();
 };
 
+Post.statics.getPostsHashtag = function (hashtag) {
+  return this.find({ tags: hashtag })
+    .populate('accountId', 'common_profile.thumbnail')
+    .limit(7)
+    .sort({ _id: -1 })
+    .exec();
+};
+
 export default mongoose.model('Post', Post);
 

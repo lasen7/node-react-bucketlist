@@ -459,6 +459,7 @@ export const handleGetPosts = (req, res, next) => {
       getPostsFriend(req, res, next);
       break;
     case 'tag':
+      getPostsHashtag(req, res, next);
       break;
     default:
       return res.status(400).send({
@@ -633,6 +634,31 @@ export const getPostsFriendByType = async (req, res, next) => {
     });
 
     const posts = await Post.getPostsFriendByType(postId, listType, followeeNames);
+
+    for (let post of posts) {
+      const data = await combineResult(post, req);
+      datas.push(data);
+    }
+
+    res.send({ msg: 'SUCCESS', data: datas });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getPostsHashtag = async (req, res, next) => {
+  const hashtag = req.query.hashtag;
+  if (!hashtag) {
+    return res.status(400).send({
+      msg: 'Invalid hashtag',
+      code: 3
+    });
+  }
+
+  let datas = [];
+
+  try {
+    const posts = await Post.getPostsHashtag(hashtag);
 
     for (let post of posts) {
       const data = await combineResult(post, req);
