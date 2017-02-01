@@ -10,6 +10,10 @@ Bookmark.statics.findBookmark = function (accountId) {
   return this.findOne({ accountId }).exec();
 };
 
+Bookmark.statics.findBookmarkById = function (accountId, postId) {
+  return this.findOne({ accountId, posts: postId }).exec();
+};
+
 Bookmark.statics.likeBookmark = function (accountId, username, postId) {
   let bookmark = new this();
   bookmark.accountId = accountId;

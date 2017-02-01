@@ -1,5 +1,7 @@
 import { validateObjectId, validateWritePostBody, validateEditPostBody } from '../utils/validation';
 import Post from '../models/post';
+import Bookmark from '../models/bookmark';
+import Follow from '../models/follow';
 
 import fs from 'fs';
 import path from 'path';
@@ -401,6 +403,16 @@ export const getPost = (req, res, next) => {
     });
   }
 
+  if (!req.user) {
+    return res.status(401).send({
+      msg: 'Not authorized',
+      code: 3
+    });
+  }
+
+  let result = { msg: 'SUCCESS' };
+  let _post = null;
+
   Post.getPostDetail(req.params.postId)
     .then(post => {
       if (!post) {
@@ -411,7 +423,39 @@ export const getPost = (req, res, next) => {
         throw error;
       }
 
-      res.send(post);
+      _post = post;
+
+      // combine a result
+      result.writer = post.writer;
+
+      result.common_profile = {
+        thumbnail: post.accountId.common_profile.thumbnail
+      };
+
+      result.post = {
+        image: post.image,
+        description: post.description,
+        date: post.date,
+        likes: post.likes
+      };
+
+      result.comment_count = post.comments.length;
+
+      return Bookmark.findBookmarkById(req.user._id, req.params.postId);
+    })
+    .then(bookmark => {
+      result.bookmark = bookmark ? true : false;
+
+      return Follow.findFollow(_post.accountId._id, req.user._id);
+    })
+    .then(follow => {
+      result.follow = follow ? true : false;
+
+      // own post
+      if (_post.accountId._id.toString() === req.user._id)
+        result.follow = true;
+
+      res.send(result);
     })
     .catch(err => {
       next(err);
