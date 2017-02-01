@@ -16,7 +16,7 @@ const Post = new Schema({
   comments: [Comment]
 });
 
-Post.statics.writePost = function ({ accountId, username, image, description, latitude, longitude }) {
+Post.statics.writePost = function ({ accountId, username, image, description, latitude, longitude, hashtags }) {
   let post = new this();
   post.accountId = accountId;
   post.writer = username;
@@ -24,6 +24,7 @@ Post.statics.writePost = function ({ accountId, username, image, description, la
   post.description = description;
   post.location.latitude = latitude;
   post.location.longitude = longitude;
+  post.tags = hashtags;
 
   return post.save();
 };

@@ -4,6 +4,8 @@ import Post from '../models/post';
 import fs from 'fs';
 import path from 'path';
 
+import findHashtags from 'find-hashtags';
+
 import { uploadToS3, deleteInS3 } from '../utils/awsWrapper';
 
 /**
@@ -49,13 +51,16 @@ export const writePost = (req, res, next) => {
     contentType: body.image.mimetype
   })
     .then(url => {
+      const hashtags = findHashtags(body.description);
+
       Post.writePost({
         accountId: req.user._id,
         username: req.user.common_profile.username,
         image: url,
         description: body.description,
         latitude: body.latitude,
-        longitude: body.longitude
+        longitude: body.longitude,
+        hashtags
       });
     })
     .then(() => {
@@ -91,8 +96,8 @@ export const editPost = (req, res, next) => {
   const body = {
     image: req.file,
     description: req.body.description,
-    latitude: +req.body.latitude,
-    longitude: +req.body.longitude
+    latitude: req.body.latitude && +req.body.latitude,
+    longitude: req.body.longitude && +req.body.longitude
   };
 
   const validate = validateEditPostBody(body);
@@ -148,7 +153,12 @@ export const editPost = (req, res, next) => {
       .then(url => {
         let params = {};
         if (body.image) params.image = url;
-        if (body.description) params.description = body.description;
+        if (body.description) {
+          params.description = body.description;
+
+          const hashtags = findHashtags(body.description);
+          params.tags = hashtags;
+        }
         if (body.latitude) {
           params.location = {};
           params.location.latitude = body.latitude;
@@ -172,7 +182,12 @@ export const editPost = (req, res, next) => {
   } else {
     // 1. edit db
     let params = {};
-    if (body.description) params.description = body.description;
+    if (body.description) {
+      params.description = body.description;
+
+      const hashtags = findHashtags(body.description);
+      params.tags = hashtags;
+    }
     if (body.latitude) {
       params.location = {};
       params.location.latitude = body.latitude;
