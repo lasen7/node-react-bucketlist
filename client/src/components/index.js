@@ -1,7 +1,11 @@
-import UserList from './UserList/UserList';
-import UserInfo from './UserInfo/UserInfo';
+import {
+  Background,
+  Title,
+  Signin
+} from './Auth';
 
 export {
-  UserList,
-  UserInfo
+  Background,
+  Title,
+  Signin
 };

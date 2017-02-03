@@ -1,0 +1,16 @@
+.auth {
+
+  .title {    
+    text-align: center;
+    color: #f8f9fa;
+    font-size: 5rem;
+    padding-top: 3rem;
+  }
+
+    @include media("<tablet") {
+      .title {
+        font-size: 3rem;
+      }
+    }
+
+}
