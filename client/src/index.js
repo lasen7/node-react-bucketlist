@@ -8,8 +8,6 @@ import store from './store';
 
 import { App, Home, NotFound } from 'containers';
 
-import './index.css';
-
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
