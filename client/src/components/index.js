@@ -1,11 +1,13 @@
 import {
   Background,
   Title,
-  Signin
+  Signin,
+  Signup
 } from './Auth';
 
 export {
   Background,
   Title,
-  Signin
+  Signin,
+  Signup
 };

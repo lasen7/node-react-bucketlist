@@ -1,14 +1,29 @@
 import React, { Component } from 'react';
 
-import { Background, Title, Signin } from 'components';
+import NotFound from './NotFound';
+import { Background, Title, Signin, Signup } from 'components';
 
 class Auth extends Component {
   render() {
+    const {signin} = this.props.params;
+    let isSignin = /^signin$/.test(signin);
+    let isSignup = /^signup$/.test(signin);
+
+    if (signin && !isSignin && !isSignup) {
+      return (
+        <NotFound />
+      );
+    }
+
+    if (!signin) {
+      isSignin = true;
+    }
+
     return (
       <div className="auth">
         <Background />
         <Title text="BUCKET LIST" />
-        <Signin />
+        {isSignin ? <Signin location={this.props.location} /> : <Signup location={this.props.location} />}
       </div>
     );
   }

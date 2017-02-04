@@ -13,6 +13,8 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={App}>
         <IndexRoute component={Auth} />
+        <Route path="auth" component={Auth} />
+        <Route path="auth/:signin" component={Auth} />
         <Route path="*" component={NotFound} />
       </Route>
     </Router>
