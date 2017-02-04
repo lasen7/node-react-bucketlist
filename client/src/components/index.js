@@ -1,4 +1,8 @@
 import {
+  Header
+} from './Base';
+
+import {
   Background,
   Title,
   Signin,
@@ -6,6 +10,8 @@ import {
 } from './Auth';
 
 export {
+  Header,
+
   Background,
   Title,
   Signin,
