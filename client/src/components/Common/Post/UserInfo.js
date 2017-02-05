@@ -14,7 +14,7 @@ const UserInfo = () => {
 
       <div className="option-wrapper">
         <div className="option">
-          <Dropdown right icon="ellipsis vertical">
+          <Dropdown icon="ellipsis vertical">
             <Dropdown.Menu>
               <Dropdown.Item text='신고' />
               <Dropdown.Item text='수정' />

@@ -38,6 +38,7 @@
         left: 50%;
         transform: translate(-50%, -50%);    
         font-size: 1.4rem;
+        z-index: 10;
 
         .menu {
           left: -40px;
@@ -49,6 +50,42 @@
         top: 50%;
         transform: translateY(-50%);            
       }
+    }
+  }
+
+  .icons {
+    padding: 1rem;
+    overflow: hidden;
+    position: relative;
+    height: 3.5rem;
+
+    .icon-count {
+      font-size: 0.8rem;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .heart-wrapper {
+      float: left;
+    }
+
+    .comment-wrapper {
+      float: left;
+      margin-left: 1rem;
+    }
+
+    .bookmark-wrapper {
+      float: right;
+    }
+
+    .ui.divider {
+      margin-top: 35px;
+      clear: both;
+    }
+
+    i {
+      cursor: pointer;
     }
   }
 
