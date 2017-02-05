@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-import { Header } from 'components';
+import { Header, Post } from 'components';
 
 class Feed extends Component {
   render() {
     return (
       <div>
         <Header />
-        Feed
+        <Post />
       </div>
     );
   }

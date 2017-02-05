@@ -3,6 +3,10 @@ import {
 } from './Base';
 
 import {
+  Post
+} from './Common';
+
+import {
   Background,
   Title,
   Signin,
@@ -11,6 +15,8 @@ import {
 
 export {
   Header,
+
+  Post,
 
   Background,
   Title,

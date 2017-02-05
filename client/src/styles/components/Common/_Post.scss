@@ -1,0 +1,55 @@
+.post {
+
+  .user-info {
+    .thumbnail {
+      display: inline-block;
+      padding-left: 1rem;
+    }
+
+    .username {
+      display: inline-block;
+      width: calc(100% - 200px);
+      height: 50px;
+      overflow: hidden;    
+      position: relative;
+      padding-left: 1rem;
+
+      span {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);              
+      }
+    }
+
+    .option-wrapper {
+      float: right;
+      position: relative;
+    }
+
+    .option {
+      float: right;
+      width: 50px;
+      height: 50px;
+      position: relative;
+
+      .ui.dropdown {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);    
+        font-size: 1.4rem;
+
+        .menu {
+          left: -40px;
+        }
+      }
+
+      span {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);            
+      }
+    }
+  }
+
+}

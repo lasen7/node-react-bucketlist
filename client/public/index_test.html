@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css"></link>
+  <title>React App</title>
+  <style>
+    .user-info {
+/*      position: relative;*/
+/*      height: 50px;*/
+    }
+    
+    .username {
+      display: inline-block;
+      background-color: red;
+      width: calc(100% - 300px);
+      height: 50px;
+      overflow: hidden;    
+      position: relative;
+    }
+    
+    .username span {
+      position: absolute;
+      top: 50%;
+/*      left: 50%;*/
+      transform: translateY(-50%);      
+    }
+    
+    .right {      
+      float: right;
+      position: relative;
+    }
+    
+    .span-wrapper {
+      float: right;
+      background-color: aqua;
+      width: 100px;
+      height: 50px;
+      position: relative;
+    }
+    
+    .span-wrapper span, .span-wrapper i{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    
+    
+  </style>
+</head>
+
+<body>
+<!--
+  <div class="user-info">
+   <div style="display: inline-block">
+    <img src="http://semantic-ui.com/images/avatar/small/jenny.jpg" /> 
+   </div>    
+    <div class="username"><span>hspark</span></div>
+    <div class="right">
+      <div class="span-wrapper"><span>팔로우</span></div>
+      <div class="span-wrapper"><i class=" icon"></i></div>
+    </div>    
+  </div>
+-->
+
+<div class="ui menu">
+  <div class="item">Home</div>
+  <div role="listbox" aria-expanded="false" class="ui pointing link item dropdown" tabindex="0">
+    <div class="text">Shopping</div>
+    <i aria-hidden="true" class="dropdown icon"></i>
+    <div class="menu transition">
+      <div class="header">Categories</div>
+      <div role="option" class="item">
+        <i class="dropdown icon"></i>pointing<span class="text">Clothing</span>
+        <div class="menu transition">
+          <div class="header">Mens</div>
+          <div role="option" class="item">Shirts</div>
+          <div role="option" class="item">Pants</div>
+          <div role="option" class="item">Jeans</div>
+          <div role="option" class="item">Shoes</div>
+          <div class="divider">
+          </div>
+          <div class="header">Womens</div>
+          <div role="option" class="item">Dresses</div>
+          <div role="option" class="item">Shoes</div>
+          <div role="option" class="item">Bags</div>
+        </div>
+      </div>
+      <div role="option" class="item">Home Goods</div>
+      <div role="option" class="item">Bedroom</div>
+      <div class="divider">
+      </div>
+      <div class="header">Order</div>
+      <div role="option" class="item">Status</div>
+      <div role="option" class="item">Cancellations</div>
+    </div>
+  </div>
+  <div class="item">Forums</div>
+  <div class="item">Contact Us</div>
+</div>
+
+</body>
+
+</html>
