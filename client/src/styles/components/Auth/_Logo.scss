@@ -1,6 +1,6 @@
 .auth {
 
-  .title {    
+  .logo {    
     text-align: center;
     color: #f8f9fa;
     font-size: 4rem;
@@ -10,7 +10,7 @@
   }
 
     @include media("<tablet") {
-      .title {
+      .logo {
         font-size: 3rem;
       }
     }

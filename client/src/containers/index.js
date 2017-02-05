@@ -5,6 +5,7 @@ import Auth from './Auth';
 import Feed from './Feed';
 import Hashtag from './Hashtag';
 import Profile from './Profile';
+import Post from './Post';
 
 export {
   App,
@@ -13,5 +14,6 @@ export {
   Auth,
   Feed,
   Hashtag,
-  Profile
+  Profile,
+  Post
 };

@@ -3,12 +3,13 @@ import {
 } from './Base';
 
 import {
-  Post
+  Post,
+  PreviewList
 } from './Common';
 
 import {
   Background,
-  Title,
+  Logo,
   Signin,
   Signup
 } from './Auth';
@@ -25,11 +26,12 @@ export {
   Header,
   Post,
   Background,
-  Title,
+  Logo,
   Signin,
   Signup,
   Search,
   SearchInput,
   SearchResultList,
-  ProfileWrapper
+  ProfileWrapper,
+  PreviewList
 };

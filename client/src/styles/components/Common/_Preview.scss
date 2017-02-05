@@ -1,0 +1,24 @@
+.preview-list {
+  max-width: 800px;;
+  border: 1px solid #e6e6e6;  
+  margin: 1rem auto;
+  background-color: white;
+
+  .ui.grid {
+    margin: 0 auto;
+
+    .column {
+      padding: 0.8rem 0.8rem 0 0.8rem;
+    }
+  }
+
+  @include media("<800px") {
+    border: none;
+
+    .ui.grid {
+      .column {
+        padding: 0.2rem 0.2rem 0 0.2rem;
+      }   
+    }
+  }
+}

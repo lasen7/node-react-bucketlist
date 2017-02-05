@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import NotFound from './NotFound';
-import { Background, Title, Signin, Signup } from 'components';
+import { Background, Logo, Signin, Signup } from 'components';
 
 class Auth extends Component {
   render() {
@@ -22,7 +22,7 @@ class Auth extends Component {
     return (
       <div className="auth">
         <Background />
-        <Title text="BUCKET LIST" />
+        <Logo text="BUCKET LIST" />
         {isSignin ? <Signin location={this.props.location} /> : <Signup location={this.props.location} />}
       </div>
     );

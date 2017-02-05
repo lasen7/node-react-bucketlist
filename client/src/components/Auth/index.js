@@ -1,11 +1,11 @@
 import Background from './Background';
-import Title from './Title';
+import Logo from './Logo';
 import Signin from './Signin';
 import Signup from './Signup';
 
 export {
   Background,
-  Title,
+  Logo,
   Signin,
   Signup
 };
