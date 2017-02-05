@@ -89,4 +89,21 @@
     }
   }
 
+  .description {
+    padding: 1rem;
+    position: relative;
+
+    .text {      
+      display: inline-block;
+      width: calc(100% - 60px);
+      line-height: 120%;
+    }
+
+    .date {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+  }
+
 }
