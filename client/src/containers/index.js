@@ -4,6 +4,7 @@ import NotFound from './NotFound';
 import Auth from './Auth';
 import Feed from './Feed';
 import Hashtag from './Hashtag';
+import Profile from './Profile';
 
 export {
   App,
@@ -11,5 +12,6 @@ export {
   NotFound,
   Auth,
   Feed,
-  Hashtag
+  Hashtag,
+  Profile
 };

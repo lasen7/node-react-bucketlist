@@ -19,6 +19,8 @@ import {
   SearchResultList
 } from './Search';
 
+import ProfileWrapper from './Profile/ProfileWrapper';
+
 export {
   Header,
   Post,
@@ -28,5 +30,6 @@ export {
   Signup,
   Search,
   SearchInput,
-  SearchResultList
+  SearchResultList,
+  ProfileWrapper
 };
