@@ -8,6 +8,7 @@ class Feed extends Component {
       <div>
         <Header />
         <Post />
+        <Post />
       </div>
     );
   }
