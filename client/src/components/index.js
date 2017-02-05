@@ -13,13 +13,20 @@ import {
   Signup
 } from './Auth';
 
+import {
+  Search,
+  SearchInput,
+  SearchResultList
+} from './Search';
+
 export {
   Header,
-
   Post,
-
   Background,
   Title,
   Signin,
-  Signup
+  Signup,
+  Search,
+  SearchInput,
+  SearchResultList
 };

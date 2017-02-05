@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 
-import { Header, Post } from 'components';
+import { Post } from 'components';
 
 class Feed extends Component {
   render() {
     return (
-      <div>
-        <Header />
+      <div>        
         <Post />
         <Post />
       </div>

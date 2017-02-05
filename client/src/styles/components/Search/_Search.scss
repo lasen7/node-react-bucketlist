@@ -1,0 +1,38 @@
+.search {
+  margin: 1rem auto;
+  max-width: 600px;
+  border: 1px solid #e6e6e6;  
+  background-color: white;
+
+  @include media("<600px") {
+    border: none;
+  }
+
+  .search-input {
+    padding: 1rem;
+  }
+
+  .search-result {
+    padding: 2rem 1rem;
+    overflow: hidden;
+    cursor: pointer;
+
+    .icon-wrapper {
+    }
+
+    .result-wrapper {
+      padding-left: 30px;
+      line-height: 120%;
+    }
+
+    .count {
+      float: right;
+    }
+  }
+
+  .empty {
+    padding: 5rem 0;
+    text-align: center;
+  }
+
+}
