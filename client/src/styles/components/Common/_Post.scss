@@ -106,4 +106,24 @@
     }
   }
 
+  .comment-list {
+    padding: 0 1rem;
+
+    .open-comment {
+      display: inline-block;
+      color: #999;
+      cursor: pointer;
+    }
+
+    .comment {
+      .username {
+        font-weight: 600;
+      }
+    }
+  }
+
+  .comment-input {
+    padding: 0 1rem;
+  }
+
 }

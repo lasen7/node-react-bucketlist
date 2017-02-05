@@ -2,20 +2,8 @@ import React, { Component } from 'react';
 
 import { Link } from 'react-router';
 
-import { Icon, Menu } from 'semantic-ui-react'
-
 class Header extends Component {
-  state = {
-    activeItem: 'gamepad'
-  }
-
-  handleItemClick = (e, { name }) => {
-    this.setState({ activeItem: name });
-  };
-
   render() {
-    const { activeItem } = this.state;
-
     return (
 
       <div className="header">

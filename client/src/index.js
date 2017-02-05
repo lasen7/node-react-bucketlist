@@ -6,7 +6,7 @@ import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import { Provider } from 'react-redux';
 import store from './store';
 
-import { App, Home, NotFound, Auth, Feed } from 'containers';
+import { App, NotFound, Auth, Feed } from 'containers';
 
 ReactDOM.render(
   <Provider store={store}>

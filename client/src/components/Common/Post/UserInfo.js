@@ -7,7 +7,7 @@ const UserInfo = () => {
     <div className="user-info">
 
       <div className="thumbnail">
-        <img src="http://semantic-ui.com/images/avatar/small/jenny.jpg" />
+        <img alt="" src="http://semantic-ui.com/images/avatar/small/jenny.jpg" />
       </div>
 
       <div className="username"><span>hspark</span></div>
