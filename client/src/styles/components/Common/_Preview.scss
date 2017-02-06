@@ -1,24 +1,39 @@
-.preview-list {
-  max-width: 800px;;
+.preview-list {  
+  $max-width: 800px;
+
+  max-width: $max-width;
   border: 1px solid #e6e6e6;  
-  margin: 1rem auto;
-  background-color: white;
+  margin: 0 auto;
+  margin-bottom: 3rem;
 
   .ui.grid {
-    margin: 0 auto;
+    margin: 0.5rem;
 
-    .column {
-      padding: 0.8rem 0.8rem 0 0.8rem;
+    .row{
+      padding: 0;      
+
+      .column {
+        padding: 0.5rem;
+        width: (100% / 3);
+      }
     }
   }
 
-  @include media("<800px") {
+  @include media("<#{$max-width}") {
     border: none;
 
     .ui.grid {
-      .column {
-        padding: 0.2rem 0.2rem 0 0.2rem;
-      }   
+      margin: 0;
+
+      .row{
+        padding: 0;
+
+        .column {
+          padding: 0.2rem;
+          width: (100% / 2);
+        }
+
+      } 
     }
   }
 }

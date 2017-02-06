@@ -1,31 +1,30 @@
 import React from 'react';
 
+import image from 'assets/sample-image.jpg';
+
 const PreviewList = () => {
   return (
     <div className="preview-list">
       <div className="ui grid">
 
-        <div className="three column row">
+        <div className="column row">
           <div className="column">
-            <img className="ui image" src="http://semantic-ui.com/images/wireframe/image.png" />
+            <img className="ui image" src={image} />
           </div>
           <div className="column">
-            <img className="ui image" src="http://semantic-ui.com/images/wireframe/image.png" />
+            <img className="ui image" src={image} />
           </div>
           <div className="column">
-            <img className="ui image" src="http://semantic-ui.com/images/wireframe/image.png" />
-          </div>
-        </div>
-
-        <div className="three column row">
-          <div className="column">
-            <img className="ui image" src="http://semantic-ui.com/images/wireframe/image.png" />
+            <img className="ui image" src={image} />
           </div>
           <div className="column">
-            <img className="ui image" src="http://semantic-ui.com/images/wireframe/image.png" />
+            <img className="ui image" src={image} />
           </div>
           <div className="column">
-            <img className="ui image" src="http://semantic-ui.com/images/wireframe/image.png" />
+            <img className="ui image" src={image} />
+          </div>
+          <div className="column">
+            <img className="ui image" src={image} />
           </div>
         </div>
 

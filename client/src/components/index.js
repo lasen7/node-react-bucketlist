@@ -4,7 +4,8 @@ import {
 
 import {
   Post,
-  PreviewList
+  PreviewList,
+  PageTitle
 } from './Common';
 
 import {
@@ -33,5 +34,6 @@ export {
   SearchInput,
   SearchResultList,
   ProfileWrapper,
-  PreviewList
+  PreviewList,
+  PageTitle
 };

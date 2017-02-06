@@ -1,8 +1,9 @@
 import React from 'react';
+import image from 'assets/sample-image.jpg';
 
 const Image = () => {
   return (
-    <img alt="" className="ui fluid image" src="http://www.placehold.it/480x480" />
+    <img className="ui flid image" src={image} alt="" />
   );
 };
 
