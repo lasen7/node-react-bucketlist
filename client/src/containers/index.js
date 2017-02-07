@@ -6,6 +6,8 @@ import Feed from './Feed';
 import Hashtag from './Hashtag';
 import Profile from './Profile';
 import Post from './Post';
+import Bookmark from './Bookmark';
+import Goal from './Goal';
 
 export {
   App,
@@ -15,5 +17,7 @@ export {
   Feed,
   Hashtag,
   Profile,
-  Post
+  Post,
+  Bookmark,
+  Goal
 };

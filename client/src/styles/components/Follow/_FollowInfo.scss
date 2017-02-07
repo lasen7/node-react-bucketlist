@@ -1,0 +1,30 @@
+.follow-info {
+  position: relative;
+  padding: 1rem;
+
+  .thumbnail {
+    display: inline-block;
+  }
+
+  .username {
+    display: inline-block;
+    width: calc(100% - 200px);
+    height: 50px;
+    overflow: hidden;    
+    position: relative;
+    padding-left: 1rem;
+
+    span {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);              
+    }
+  }
+
+  .button {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);            
+  }
+}

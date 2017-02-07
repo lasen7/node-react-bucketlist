@@ -12,11 +12,11 @@ class Header extends Component {
 
           <div className="menu">
             <div className="icon-wrapper">
-              <i className="user icon" ></i>
+              <Link to="/profile/1234"><i className="user icon" ></i></Link>
             </div>
 
             <div className="icon-wrapper">
-              <i className="search icon" ></i>
+              <Link to="/search"><i className="search icon" ></i></Link>
             </div>
 
             <div className="icon-wrapper">

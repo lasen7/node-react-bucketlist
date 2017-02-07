@@ -23,6 +23,13 @@ import {
 
 import ProfileWrapper from './Profile/ProfileWrapper';
 
+import {
+  FollowInfo,
+  FollowInfoList
+} from './Follow';
+
+import GoalWrapper from './Goal/GoalWrapper';
+
 export {
   Header,
   Post,
@@ -35,5 +42,8 @@ export {
   SearchResultList,
   ProfileWrapper,
   PreviewList,
-  PageTitle
+  PageTitle,
+  FollowInfo,
+  FollowInfoList,
+  GoalWrapper
 };

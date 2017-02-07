@@ -6,6 +6,10 @@
     width: 100vw;    
     position: relative;
     background-color: white;
+
+    a {
+      color: black;
+    }
   }
 
   .top-logo {
@@ -25,7 +29,6 @@
       margin-right: 2rem;
       width: 50px;
       height: 50px;
-      cursor: pointer;
       position: relative;
 
       &:hover, &:active {

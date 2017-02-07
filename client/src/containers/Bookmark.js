@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 
 import { PageTitle, PreviewList } from 'components';
 
-class Post extends Component {
+class Bookmark extends Component {
   render() {
     return (
       <div>
-        <PageTitle title="게시물" />
+        <PageTitle title="북마크" />
         <PreviewList />
       </div>
     );
   }
 }
 
-export default Post;
+export default Bookmark;
