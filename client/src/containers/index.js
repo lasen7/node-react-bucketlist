@@ -9,6 +9,8 @@ import Post from './Post';
 import Bookmark from './Bookmark';
 import Goal from './Goal';
 import Write from './Write';
+import Friend from './Friend';
+import Search from './Search';
 
 export {
   App,
@@ -21,5 +23,7 @@ export {
   Post,
   Bookmark,
   Goal,
-  Write
+  Write,
+  Friend,
+  Search
 };

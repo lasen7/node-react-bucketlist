@@ -24,7 +24,7 @@ class Header extends Component {
             </div>
 
             <div className="icon-wrapper">
-              <i className="users icon" ></i>
+              <Link to="/friend"><i className="users icon" ></i></Link>
             </div>
 
             <div className="icon-wrapper">

@@ -6,7 +6,7 @@ import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import { Provider } from 'react-redux';
 import store from './store';
 
-import { App, NotFound, Auth, Feed, Hashtag, Profile, Post, Bookmark, Goal, Write } from 'containers';
+import { App, NotFound, Auth, Feed, Hashtag, Profile, Post, Bookmark, Goal, Write, Friend, Search } from 'containers';
 
 ReactDOM.render(
   <Provider store={store}>
@@ -21,6 +21,8 @@ ReactDOM.render(
         <Route path="bookmark/:username" component={Bookmark} />
         <Route path="goal/:username" component={Goal} />
         <Route path="write" component={Write} />
+        <Route path="friend" component={Friend} />
+        <Route path="search/:hashtag" component={Search} />
         <Route path="*" component={NotFound} />
       </Route>
     </Router>
