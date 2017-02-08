@@ -16,11 +16,11 @@ class componentName extends Component {
 
   render() {
     const addItem = (
-      <div onClick={this.toggleWrite}>Add an item...</div>
+      <div className="add-item" onClick={this.toggleWrite}>Add an item...</div>
     );
 
     return (
-      <div className="add-item">
+      <div className="">
         {this.state.isWrite ? <WriteItem onCancel={this.toggleWrite} /> : addItem}
       </div>
     );

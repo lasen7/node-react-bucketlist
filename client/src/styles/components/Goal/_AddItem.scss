@@ -1,5 +1,10 @@
 .add-item {
-  padding-left: 0.5rem;
-  line-height: 50px;
-  cursor: pointer;
+  padding-left: 1rem;
+  line-height: 40px;
+  cursor: pointer;  
+  background-color: rgba(0, 0, 0, 0.12);
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
 }

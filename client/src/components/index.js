@@ -30,6 +30,10 @@ import {
 
 import GoalWrapper from './Goal/GoalWrapper';
 
+import WriteInput from './Write/WriteInput';
+import UploadImage from './Write/UploadImage';
+import WriteButton from './Write/WriteButton';
+
 export {
   Header,
   Post,
@@ -45,5 +49,8 @@ export {
   PageTitle,
   FollowInfo,
   FollowInfoList,
-  GoalWrapper
+  GoalWrapper,
+  WriteInput,
+  UploadImage,
+  WriteButton
 };

@@ -20,7 +20,7 @@ class Header extends Component {
             </div>
 
             <div className="icon-wrapper">
-              <i className="write icon" ></i>
+              <Link to="/write"><i className="write icon" ></i></Link>
             </div>
 
             <div className="icon-wrapper">
@@ -28,7 +28,7 @@ class Header extends Component {
             </div>
 
             <div className="icon-wrapper">
-              <i className="home icon" ></i>
+              <Link to="/"><i className="home icon" ></i></Link>
             </div>
           </div>
 
