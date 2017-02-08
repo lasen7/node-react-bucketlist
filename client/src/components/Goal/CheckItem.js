@@ -4,8 +4,8 @@ import { Checkbox } from 'semantic-ui-react'
 const CheckItem = () => {
   return (
     <div className="check-item">
-      {/*<Checkbox label={{ children: 'Make my profile visible' }} />*/}
-      Lorem ipsum dolor sit amet.
+      <Checkbox
+        label='This checkbox is read-only' />
     </div>
   );
 };
