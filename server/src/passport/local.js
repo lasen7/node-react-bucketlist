@@ -15,7 +15,7 @@ passport.use(
             let error = new Error();
             error.code = 400;
             error.message = 'Duplicate username';
-            error.errorCode = 5;
+            error.errorCode = 6;
             throw error;
           } else {
             // check email duplication
@@ -28,7 +28,7 @@ passport.use(
             let error = new Error();
             error.code = 400;
             error.message = 'Duplicate email';
-            error.errorCode = 6;
+            error.errorCode = 7;
             throw error;
           } else {
             // generate password hash
