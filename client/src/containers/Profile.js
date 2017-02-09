@@ -8,6 +8,26 @@ import { bindActionCreators } from 'redux';
 import * as auth from 'redux/modules/auth';
 
 class Profile extends Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  };
+
+  componentDidMount() {
+    this.checkSession();
+  }
+
+  checkSession = async () => {
+    const {AuthActions} = this.props;
+
+    await AuthActions.getInfo();
+
+    // check status
+    const session = this.props.status.auth.getIn(['session']).toObject();
+    if (!session._id) {
+      this.context.router.push('/auth/signin');
+    }
+  }
+
   render() {
     return (
       <div>
@@ -19,7 +39,9 @@ class Profile extends Component {
 
 Profile = connect(
   state => ({
-
+    status: {
+      auth: state.auth
+    }
   }),
   dispatch => ({
     AuthActions: bindActionCreators(auth, dispatch)

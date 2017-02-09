@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Popup, Icon } from 'semantic-ui-react';
 
-const UserInfo = ({AuthActions}) => {
+const UserInfo = ({AuthActions, status}) => {
   const handleLogout = async () => {
     console.log('AuthActions: ', AuthActions);
 
@@ -10,6 +10,11 @@ const UserInfo = ({AuthActions}) => {
 
     document.location.href = '/auth';
   };
+
+  // status.auth is Map
+  const {auth} = status;
+  const username = auth.getIn(['session', 'common_profile', 'username']);
+  const fullname = auth.getIn(['session', 'common_profile', 'fullname']);
 
   return (
     <div className="user-info">
@@ -24,10 +29,10 @@ const UserInfo = ({AuthActions}) => {
         <img className="ui thumbnail circular image" src="https://imgh.us/user_11.svg" alt="" />
       </div>
 
-      <div className="username">username</div>
+      <div className="username">{username}</div>
 
       <div className="fullname">
-        박환석
+        {fullname}
         <i className="write icon"></i>
       </div>
 

@@ -3,6 +3,11 @@ import React, { Component } from 'react';
 import { Header } from 'components';
 
 class App extends Component {
+  componentDidMount() {
+    console.log('App componentDidMount');
+  }
+
+
   render() {
     const { location } = this.props;
     const re = /auth/;
