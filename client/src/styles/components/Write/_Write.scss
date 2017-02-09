@@ -9,13 +9,25 @@
   }
 
   .upload-image {
-    margin-bottom: 1rem;
-    cursor: pointer;
+    margin-bottom: 1rem;    
 
-    .empty-image {
-      font-size: 2rem;
-      padding: 2rem;
-      border: 1px dotted grey;
+    .dropzone {
+      cursor: pointer;
+      border-style: dashed;
+      border-width: 2px;
+      border-color: #999;
+      padding: 5rem;
+    }
+
+    .preview {
+      position: relative;
+
+      i.remove {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        cursor: pointer;
+      }
     }
   }
 
