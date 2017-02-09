@@ -18,15 +18,33 @@ class Signin extends Component {
     this.setState({ [name]: value });
   }
 
-  handleSubmit = () => {
+  handleSignin = async () => {
     const {username, password} = this.state;
-    const {onSignin} = this.props;
 
-    onSignin(username, password);
+    try {
+      const result = await this.props.AuthActions.signin(username, password);
+      alert.success('로그인 성공');
+      this.context.router.push('/');
+    } catch (e) {
+      /**
+       * Error code:
+       *  1. Invalid username
+       *  2. Invalid password
+       *  3. Invalid auth
+       */
+      alert.error(e.response.data.msg);
+    }
   }
 
-  leaveTo = (path) => {
+  leaveTo = (path, oauth = false) => {
     this.setState({ leave: true });
+
+    if (oauth) {
+      document.location.href = 'http://localhost:3000' + path;
+      return;
+    }
+
+
     setTimeout(() => this.context.router.push(path), 700);
   };
 
@@ -66,7 +84,7 @@ class Signin extends Component {
               <button
                 type="submit"
                 className="ui fluid button"
-                onClick={this.handleSubmit}>로그인</button>
+                onClick={this.handleSignin}>로그인</button>
             </div>
 
             <div className="ui horizontal inverted divider">
@@ -74,14 +92,18 @@ class Signin extends Component {
              </div>
 
             <div className="field">
-              <button className="ui facebook fluid button">
+              <button
+                className="ui facebook fluid button"
+                onClick={() => this.leaveTo('/api/account/facebook', true)}>
                 <i aria-hidden="true" className="facebook icon"></i>
                 페이스북
               </button>
             </div>
 
             <div className="field">
-              <button className="ui google plus fluid button">
+              <button
+                className="ui google plus fluid button"
+                onClick={() => this.leaveTo('/api/account/google', true)}>
                 <i aria-hidden="true" className="google icon"></i>
                 구글
               </button>
@@ -103,7 +125,7 @@ class Signin extends Component {
 }
 
 Signin.propTypes = {
-  onSignin: React.PropTypes.func
+  AuthActions: React.PropTypes.object
 };
 
 export default Signin;

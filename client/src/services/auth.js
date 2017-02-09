@@ -21,6 +21,19 @@ export const signup = ({
   });
 };
 
+export const signupOauth = ({
+  username
+}) => {
+  const data = new FormData();
+  data.append('username', username);
+
+  return request({
+    url: '/api/account/signup/oauth',
+    method: 'post',
+    data
+  });
+};
+
 export const signin = ({
   username,
   password

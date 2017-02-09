@@ -39,13 +39,26 @@ class Signup extends Component {
     this.setState({ [name]: value });
   }
 
-  handleSubmit = async () => {
-    const {onSignup} = this.props;
+  handleSignup = async () => {
     const {username, password, fullname, email, gender} = this.state;
 
-    const errorCode = await onSignup(username, password, fullname, email, gender);
-    if (!errorCode) {
+    try {
+      const result = await this.props.AuthActions.signup(email, fullname, username, password, gender);
+      alert.success('로그인 해 주세요');
       this.leaveTo('/auth/signin');
+    } catch (e) {
+      /**
+       * Error code:
+       *  1. Invalid email
+       *  2. Invalid fullname
+       *  3. Invalid username
+       *  4. Invalid password
+       *  5. Invalid gender
+       *  6. Duplicate username
+       *  7. Duplicate email
+       */
+
+      alert.error(e.response.data.msg);
     }
   }
 
@@ -113,7 +126,7 @@ class Signup extends Component {
               <div className="field">
                 <button
                   className="ui green button"
-                  onClick={this.handleSubmit}>회원가입</button>
+                  onClick={this.handleSignup}>회원가입</button>
               </div>
 
               <div className="field">
@@ -132,7 +145,7 @@ class Signup extends Component {
 }
 
 Signup.propTypes = {
-  onSignup: React.PropTypes.func
+  AuthActions: React.PropTypes.object
 };
 
 export default Signup;

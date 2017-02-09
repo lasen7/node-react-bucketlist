@@ -8,12 +8,20 @@ import * as service from 'services/auth';
 const SIGNUP = requize('auth/SIGNUP');
 const SIGNIN = requize('auth/SIGNIN');
 const GET_INFO = requize('auth/GET_INFO');
+const SIGNUP_OAUTH = requize('auth/SIGNUP_OAUTH');
 
 /* action creators */
 export const signup = (email, fullname, username, password, gender) => ({
   type: SIGNUP.DEFAULT,
   payload: {
     promise: service.signup({ email, fullname, username, password, gender })
+  }
+});
+
+export const signupOauth = (username) => ({
+  type: SIGNUP_OAUTH.DEFAULT,
+  payload: {
+    promise: service.signupOauth({ username })
   }
 });
 
@@ -68,6 +76,18 @@ export default handleActions({
     return reject(state, 'signup', error);
   },
 
+  // SIGNUP OAUTH
+  [SIGNUP_OAUTH.PENDING]: (state, action) => {
+    return pend(state, 'signup');
+  },
+  [SIGNUP_OAUTH.FULFILLED]: (state, action) => {
+    return fulfill(state, 'signup');
+  },
+  [SIGNUP_OAUTH.REJECTED]: (state, action) => {
+    const error = action.payload;
+    return reject(state, 'signup', error);
+  },
+
   // SIGNIN
   [SIGNIN.PENDING]: (state, action) => {
     return pend(state, 'signin');
@@ -88,8 +108,8 @@ export default handleActions({
   },
   [GET_INFO.FULFILLED]: (state, action) => {
     const {data} = action.payload;
-    return state.mergeIn(['session'], data.user);
-    //return fulfill(changed, 'getInfo');
+    const changed = state.mergeIn(['session'], data.user);
+    return fulfill(changed, 'getInfo');
   },
   [GET_INFO.REJECTED]: (state, action) => {
     const error = action.payload;

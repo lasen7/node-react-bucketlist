@@ -12,7 +12,9 @@ import {
   Background,
   Logo,
   Signin,
-  Signup
+  Signup,
+  Additional,
+  OAuthSuccess
 } from './Auth';
 
 import {
@@ -52,5 +54,7 @@ export {
   GoalWrapper,
   WriteInput,
   UploadImage,
-  WriteButton
+  WriteButton,
+  Additional,
+  OAuthSuccess
 };
