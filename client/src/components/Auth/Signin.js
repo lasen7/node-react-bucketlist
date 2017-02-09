@@ -44,7 +44,6 @@ class Signin extends Component {
       return;
     }
 
-
     setTimeout(() => this.context.router.push(path), 700);
   };
 

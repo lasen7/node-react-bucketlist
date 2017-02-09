@@ -3,10 +3,10 @@ import React from 'react';
 import UserInfo from './UserInfo';
 import Information from './Information';
 
-const ProfileWrapper = () => {
+const ProfileWrapper = (props) => {
   return (
     <div className="profile">
-      <UserInfo />
+      <UserInfo {...props} />
       <Information />
     </div>
   );

@@ -1,9 +1,23 @@
 import React from 'react';
 
-const UserInfo = () => {
+import { Popup, Icon } from 'semantic-ui-react';
+
+const UserInfo = ({AuthActions}) => {
+  const handleLogout = async () => {
+    console.log('AuthActions: ', AuthActions);
+
+    await AuthActions.logout();
+
+    document.location.href = '/auth';
+  };
+
   return (
     <div className="user-info">
-      <div className="alarm-wrapper"><i className="alarm outline large icon"></i></div>
+      <div
+        className="alarm-wrapper"
+        onClick={handleLogout}>
+        <i className="teal log out circular inverted icon"></i>
+      </div>
 
       <div className="thumbnail-wrapper">
         <i className="write teal circular inverted icon"></i>
@@ -16,7 +30,7 @@ const UserInfo = () => {
         박환석
         <i className="write icon"></i>
       </div>
-      
+
     </div>
   );
 };

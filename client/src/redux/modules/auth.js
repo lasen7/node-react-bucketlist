@@ -9,6 +9,7 @@ const SIGNUP = requize('auth/SIGNUP');
 const SIGNIN = requize('auth/SIGNIN');
 const GET_INFO = requize('auth/GET_INFO');
 const SIGNUP_OAUTH = requize('auth/SIGNUP_OAUTH');
+const LOGOUT = requize('auth/LOGOUT');
 
 /* action creators */
 export const signup = (email, fullname, username, password, gender) => ({
@@ -39,13 +40,21 @@ export const getInfo = () => ({
   }
 });
 
+export const logout = () => ({
+  type: LOGOUT.DEFAULT,
+  payload: {
+    promise: service.logout()
+  }
+});
+
 /* initialState */
 
 const initialState = Map({
   requests: Map({
     signup: Request(),
     signin: Request(),
-    getInfo: Request()
+    getInfo: Request(),
+    logout: Request()
   }),
   session: Map({
     _id: null,
@@ -114,5 +123,17 @@ export default handleActions({
   [GET_INFO.REJECTED]: (state, action) => {
     const error = action.payload;
     return reject(state, 'getInfo', error);
+  },
+
+  // LOGOUT
+  [LOGOUT.PENDING]: (state, action) => {
+    return pend(state, 'logout');
+  },
+  [LOGOUT.FULFILLED]: (state, action) => {
+    return fulfill(state, 'logout');
+  },
+  [LOGOUT.REJECTED]: (state, action) => {
+    const error = action.payload;
+    return reject(state, 'logout', error);
   }
 }, initialState);

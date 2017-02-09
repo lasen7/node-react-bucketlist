@@ -55,3 +55,10 @@ export const getInfo = () => {
     method: 'get'
   });
 };
+
+export const logout = () => {
+  return request({
+    url: '/api/account/logout',
+    method: 'post'
+  });
+};
