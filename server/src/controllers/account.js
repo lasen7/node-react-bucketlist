@@ -1,5 +1,7 @@
 import passport from 'passport';
-import { validateSignupBody, validateSigninBody } from '../utils/validation';
+import { validateSignupBody, validateSigninBody, validateUsernameBody } from '../utils/validation';
+
+import Account from '../models/account';
 
 /**
  * 회원가입
@@ -43,6 +45,74 @@ export const signup = (req, res, next) => {
     // });
 
   })(req, res, next);
+};
+
+/**
+ * 회원가입 페북, 구글
+ * body: { username }
+ */
+export const signupOauth = (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).send({
+      msg: 'Invalid request',
+      code: 1
+    });
+  }
+
+  if (req.user.common_profile.username !== null) {
+    return res.status(403).send({
+      msg: 'Registered already',
+      code: 2
+    });
+  }
+
+  if (!req.body) {
+    return res.status(400).send({
+      msg: 'Invalid request',
+      code: 3
+    });
+  }
+
+  const body = {
+    username: req.body.username
+  };
+
+  const validate = validateUsernameBody(body);
+  if (validate.error.length > 0) {
+    return res.status(400).send({
+      msg: validate.error[0].message,
+      code: validate.error[0].code
+    });
+  }
+
+  // find account
+  Account.findUser(body.username)
+    .then(account => {
+      if (account) {
+        let error = new Error();
+        error.message = 'Duplicate username';
+        error.code = 400;
+        error.errorCode = 5;
+        throw error;
+      }
+
+      return Account.findById(req.user._id).exec();
+    })
+    .then(account => {
+      account.common_profile.username = body.username;
+      return account.save();
+    })
+    .then(account => {
+      req.user.common_profile.username = body.username;
+      req.user._id = account._id;
+
+      return res.send({
+        msg: 'SUCCESS'
+      });
+    })
+    .catch(err => {
+      next(err);
+    });
 };
 
 /**
@@ -124,9 +194,9 @@ export const success = (req, res, next) => {
   }
 
   if (req.user.common_profile.username !== null) {
-    res.redirect('/auth/oauth-success');
+    res.redirect('http://localhost:3001/auth/oauth-success');
   } else {
-    res.redirect('/auth/register/additional-o');
+    res.redirect('http://localhost:3001/auth/additional');
   }
 };
 

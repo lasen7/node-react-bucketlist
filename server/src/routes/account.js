@@ -6,6 +6,7 @@ import multer from '../utils/multerWrapper';
 const router = express.Router();
 
 router.post('/signup', multer.single(), account.signup);
+router.post('/signup/oauth', multer.single(), account.signupOauth);
 router.post('/signin', multer.single(), account.signin);
 router.post('/logout', account.logout);
 router.get('/getinfo', account.getInfo);

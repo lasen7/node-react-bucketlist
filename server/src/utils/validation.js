@@ -154,3 +154,19 @@ export const validateWriteGoalBody = (body) => {
 
   return inspector.validate(validation, body);
 };
+
+export const validateUsernameBody = (body) => {
+  const validation = {
+    type: 'object',
+    properties: {
+      username: {
+        type: 'string',
+        pattern: /^[0-9a-z_]{4,20}$/,
+        code: 4,
+        error: 'Invalid username'
+      }
+    }
+  };
+
+  return inspector.validate(validation, body);
+};
