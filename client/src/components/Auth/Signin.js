@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import alert from 'alertifyjs';
+
 class Signin extends Component {
   static contextTypes = {
     router: React.PropTypes.object.isRequired
@@ -7,7 +9,21 @@ class Signin extends Component {
 
   state = {
     leave: false,
+    username: '',
+    password: ''
   };
+
+  handleChange = (e) => {
+    const {name, value} = e.target;
+    this.setState({ [name]: value });
+  }
+
+  handleSubmit = () => {
+    const {username, password} = this.state;
+    const {onSignin} = this.props;
+
+    onSignin(username, password);
+  }
 
   leaveTo = (path) => {
     this.setState({ leave: true });
@@ -15,6 +31,8 @@ class Signin extends Component {
   };
 
   render() {
+    const {username, password} = this.state;
+
     return (
       <div className="signin">
         <div className={`box animated fadeInRight ${this.state.leave ? 'fadeOutLeft' : ''}`}>
@@ -23,7 +41,11 @@ class Signin extends Component {
               <label>아이디</label>
               <div className="ui left icon input">
                 <i aria-hidden="true" className="user icon"></i>
-                <input placeholder="아이디" />
+                <input
+                  name="username"
+                  placeholder="아이디"
+                  value={username}
+                  onChange={this.handleChange} />
               </div>
             </div>
 
@@ -31,12 +53,20 @@ class Signin extends Component {
               <label>비밀번호</label>
               <div className="ui left icon input">
                 <i aria-hidden="true" className="lock icon"></i>
-                <input placeholder="비밀번호" />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="비밀번호"
+                  value={password}
+                  onChange={this.handleChange} />
               </div>
             </div>
 
             <div className="field">
-              <button type="submit" className="ui fluid button">로그인</button>
+              <button
+                type="submit"
+                className="ui fluid button"
+                onClick={this.handleSubmit}>로그인</button>
             </div>
 
             <div className="ui horizontal inverted divider">
@@ -71,5 +101,9 @@ class Signin extends Component {
     );
   }
 }
+
+Signin.propTypes = {
+  onSignin: React.PropTypes.func
+};
 
 export default Signin;

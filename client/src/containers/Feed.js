@@ -3,9 +3,13 @@ import React, { Component } from 'react';
 import { Post } from 'components';
 
 class Feed extends Component {
+  componentDidMount() {
+    console.log('feed');
+  }
+
   render() {
     return (
-      <div>        
+      <div>
         <Post />
         <Post />
       </div>

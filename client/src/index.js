@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 
 import { Provider } from 'react-redux';
-import store from './store';
+import store from './redux/store';
 
 import { App, NotFound, Auth, Feed, Hashtag, Profile, Post, Bookmark, Goal, Write, Friend, Search } from 'containers';
 
