@@ -5,32 +5,37 @@ import Dropzone from 'react-dropzone';
 class UploadImage extends Component {
 
   state = {
-    preview: '',
-    filename: ''
+    preview: ''
   }
 
   onDrop = (files) => {
+    const {onUpload} = this.props;
+
     this.setState({
-      preview: files[0].preview,
-      filename: files[0].name
+      preview: files[0].preview
     });
+
+    onUpload(files[0]);
   }
 
   handleRemove = () => {
+    const {onRemove} = this.props;
+
     this.setState({
-      preview: '',
-      filename: ''
+      preview: ''
     });
+
+    onRemove();
   }
 
   render() {
-    const {preview, filename} = this.state;
+    const {preview} = this.state;
 
     const image = (
       <div className="preview">
         <img className="ui flid image" src={preview} alt="" />
         <i
-          className="circular teal remove inverted icon"
+          className="circular remove icon"
           onClick={this.handleRemove}>
         </i>
       </div>
@@ -46,6 +51,11 @@ class UploadImage extends Component {
       </div>
     );
   }
+}
+
+UploadImage.propTypes = {
+  onUpload: React.PropTypes.func,
+  onRemove: React.PropTypes.func,
 }
 
 export default UploadImage;

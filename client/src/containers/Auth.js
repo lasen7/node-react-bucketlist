@@ -5,8 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import * as auth from 'redux/modules/auth';
 
-import NotFound from './NotFound';
-import { Background, Logo, Signin, Signup, Additional } from 'components';
+import { Background, Logo } from 'components';
 
 import alert from 'alertifyjs';
 
