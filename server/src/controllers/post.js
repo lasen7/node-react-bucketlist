@@ -283,7 +283,10 @@ export const deletePost = (req, res, next) => {
       Post.deletePost(req.params.postId);
     })
     .then(() => {
-      res.send({ msg: 'SUCCESS' });
+      res.send({
+        msg: 'SUCCESS',
+        _id: req.params.postId
+      });
     })
     .catch(err => {
       next(err);
