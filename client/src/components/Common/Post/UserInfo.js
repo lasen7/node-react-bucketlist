@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Link } from 'react-router';
+
 import { Dropdown } from 'semantic-ui-react'
 
 const UserInfo = ({session, writer, follow}) => {
@@ -15,7 +17,9 @@ const UserInfo = ({session, writer, follow}) => {
         <img alt="" src="http://semantic-ui.com/images/avatar/small/jenny.jpg" />
       </div>
 
-      <div className="username"><span>{writer}</span></div>
+      <div className="username">
+        <Link style={{ color: 'black' }} to={`/profile/${writer}`}><span>{writer}</span></Link>
+      </div>
 
       <div className="option-wrapper">
         <div className="option">

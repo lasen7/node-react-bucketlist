@@ -23,6 +23,7 @@
       overflow: hidden;    
       position: relative;
       padding-left: 1rem;
+      color: black;
 
       span {
         position: absolute;
@@ -69,6 +70,10 @@
     position: relative;
     height: 3.5rem;
 
+    i:hover, i:active {
+      color: #00B5AD;
+    }
+
     .icon-count {
       font-size: 0.8rem;
       position: absolute;
@@ -78,10 +83,6 @@
 
     .heart-wrapper {
       float: left;
-
-      i:hover, i:active {
-        color: #00B5AD;
-      }
     }
 
     .comment-wrapper {
