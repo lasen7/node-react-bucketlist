@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { Popup, Icon } from 'semantic-ui-react';
-
 const UserInfo = ({AuthActions, status}) => {
   const handleLogout = async () => {
     console.log('AuthActions: ', AuthActions);

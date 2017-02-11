@@ -22,7 +22,7 @@ class Signin extends Component {
     const {username, password} = this.state;
 
     try {
-      const result = await this.props.AuthActions.signin(username, password);
+      await this.props.AuthActions.signin(username, password);
       alert.success('로그인 성공');
       this.context.router.push('/');
     } catch (e) {

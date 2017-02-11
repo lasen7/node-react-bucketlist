@@ -9,22 +9,22 @@ const PreviewList = () => {
 
         <div className="column row">
           <div className="column">
-            <img className="ui image" src={image} />
+            <img className="ui image" src={image} alt="" />
           </div>
           <div className="column">
-            <img className="ui image" src={image} />
+            <img className="ui image" src={image} alt="" />
           </div>
           <div className="column">
-            <img className="ui image" src={image} />
+            <img className="ui image" src={image} alt="" />
           </div>
           <div className="column">
-            <img className="ui image" src={image} />
+            <img className="ui image" src={image} alt="" />
           </div>
           <div className="column">
-            <img className="ui image" src={image} />
+            <img className="ui image" src={image} alt="" />
           </div>
           <div className="column">
-            <img className="ui image" src={image} />
+            <img className="ui image" src={image} alt="" />
           </div>
         </div>
 

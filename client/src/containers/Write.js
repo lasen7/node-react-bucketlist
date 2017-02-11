@@ -57,7 +57,7 @@ class Write extends Component {
     }
 
     try {
-      const result = await PostActions.writePost(image, description);
+      await PostActions.writePost(image, description);
       this.context.router.push('/');
     } catch (e) {
       alert('다시 시도해 주세요!');
@@ -83,8 +83,6 @@ class Write extends Component {
   }
 
   render() {
-    const {PostActions} = this.props;
-
     return (
       <div >
 

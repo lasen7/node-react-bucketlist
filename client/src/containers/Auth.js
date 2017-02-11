@@ -7,8 +7,6 @@ import * as auth from 'redux/modules/auth';
 
 import { Background, Logo } from 'components';
 
-import alert from 'alertifyjs';
-
 class Auth extends Component {
   static contextTypes = {
     router: React.PropTypes.object.isRequired

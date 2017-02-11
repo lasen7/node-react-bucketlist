@@ -43,7 +43,7 @@ class Signup extends Component {
     const {username, password, fullname, email, gender} = this.state;
 
     try {
-      const result = await this.props.AuthActions.signup(email, fullname, username, password, gender);
+      await this.props.AuthActions.signup(email, fullname, username, password, gender);
       alert.success('로그인 해 주세요');
       this.leaveTo('/auth/signin');
     } catch (e) {
@@ -68,7 +68,7 @@ class Signup extends Component {
   };
 
   render() {
-    const {username, password, fullname, email, gender} = this.state;
+    const {username, password, fullname, email} = this.state;
 
     return (
       <div className="signup">

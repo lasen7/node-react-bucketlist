@@ -23,3 +23,12 @@ export const getPosts = ({
     method: 'get'
   });
 };
+
+export const deletePost = ({
+  postId
+}) => {
+  return request({
+    url: '/api/post/' + postId,
+    method: 'delete'
+  });
+};

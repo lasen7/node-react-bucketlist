@@ -42,6 +42,7 @@ class Feed extends Component {
     const postList = data.post.map(
       (post, index) => (
         <Post
+          PostActions={this.props.PostActions}
           session={session}
           data={post}
           key={post._id} />

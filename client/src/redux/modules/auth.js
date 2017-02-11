@@ -1,4 +1,4 @@
-import { createAction, handleActions } from 'redux-actions';
+import { handleActions } from 'redux-actions';
 import { Map } from 'immutable';
 import Request, { requize, pend, fulfill, reject } from 'utils/requestStatus';
 

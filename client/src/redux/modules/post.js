@@ -7,6 +7,7 @@ import * as service from 'services/post';
 /* actions */
 const WRITE_POST = requize('post/WRITE_POST');
 const GET_POSTS = requize('post/GET_POSTS');
+const DELETE_POST = requize('post/DELETE_POST');
 
 /* action creators */
 export const writePost = (image, description) => ({
@@ -23,11 +24,19 @@ export const getPosts = (qs) => ({
   }
 });
 
+export const deletePost = (postId) => ({
+  type: DELETE_POST.DEFAULT,
+  payload: {
+    promise: service.deletePost({ postId })
+  }
+});
+
 /* initialState */
 const initialState = Map({
   requests: Map({
     write: Request(),
-    getPosts: Request()
+    getPosts: Request(),
+    deletePost: Request()
   }),
   post: List()
 });
@@ -59,6 +68,23 @@ export default handleActions({
   [GET_POSTS.REJECTED]: (state, action) => {
     const error = action.payload;
     return reject(state, 'getPosts', error);
+  },
+
+  // DELETE POST
+  [DELETE_POST.PENDING]: (state, action) => {
+    return pend(state, 'deletePost');
+  },
+  [DELETE_POST.FULFILLED]: (state, action) => {
+    const {data} = action.payload;
+    const index = state.get('post').findIndex(list => {
+      return list._id === data._id
+    });
+    const changed = state.updateIn(['post'], list => list.delete(index));
+    return fulfill(changed, 'deletePost');
+  },
+  [DELETE_POST.REJECTED]: (state, action) => {
+    const error = action.payload;
+    return reject(state, 'deletePost', error);
   },
 
 }, initialState);

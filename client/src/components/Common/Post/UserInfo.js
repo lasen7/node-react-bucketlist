@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 
 import { Dropdown } from 'semantic-ui-react'
 
-const UserInfo = ({session, writer, follow}) => {
+const UserInfo = ({onDeletePost, session, writer, follow}) => {
 
   const followView = (
     <div className="option"><span>팔로우</span></div>
@@ -27,7 +27,7 @@ const UserInfo = ({session, writer, follow}) => {
             <Dropdown.Menu>
               {session.common_profile.username !== writer ? <Dropdown.Item text='신고' /> : undefined}
               {session.common_profile.username === writer ? <Dropdown.Item text='수정' /> : undefined}
-              {session.common_profile.username === writer ? <Dropdown.Item text='삭제' /> : undefined}
+              {session.common_profile.username === writer ? <Dropdown.Item text='삭제' onClick={onDeletePost} /> : undefined}
             </Dropdown.Menu>
           </Dropdown>
         </div>
