@@ -78,6 +78,10 @@
 
     .heart-wrapper {
       float: left;
+
+      i:hover, i:active {
+        color: #00B5AD;
+      }
     }
 
     .comment-wrapper {
@@ -110,6 +114,8 @@
     }
 
     .date {
+      font-size: 0.8rem;
+      color: #999;
       position: absolute;
       top: 1rem;
       right: 1rem;

@@ -24,7 +24,7 @@ class Auth extends Component {
     await AuthActions.getInfo();
 
     // check status
-    const session = this.props.status.auth.getIn(['session']).toObject();
+    const session = this.props.status.auth.getIn(['session']).toJS();
     if (session._id) {
       this.context.router.push('/');
     }

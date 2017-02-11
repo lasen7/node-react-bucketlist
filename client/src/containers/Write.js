@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import * as auth from 'redux/modules/auth';
 import * as post from 'redux/modules/post';
 
 import { PageTitle, UploadImage, WriteInput, WriteButton } from 'components';
@@ -21,10 +22,24 @@ class Write extends Component {
 
   componentDidMount() {
     document.body.classList.add('hide-scroll');
+
+    this.checkSession();
   }
 
   componentWillUnmount() {
     document.body.classList.remove('hide-scroll');
+  }
+
+  checkSession = async () => {
+    const {AuthActions} = this.props;
+
+    await AuthActions.getInfo();
+
+    // check status
+    const session = this.props.status.auth.getIn(['session']).toJS();
+    if (!session._id) {
+      this.context.router.push('/auth/signin');
+    }
   }
 
   handleWritePost = async () => {
@@ -94,10 +109,12 @@ class Write extends Component {
 Write = connect(
   state => ({
     status: {
+      auth: state.auth,
       post: state.post
     }
   }),
   dispatch => ({
+    AuthActions: bindActionCreators(auth, dispatch),
     PostActions: bindActionCreators(post, dispatch)
   })
 )(Write);

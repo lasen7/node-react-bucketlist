@@ -14,3 +14,12 @@ export const writePost = ({
     data
   });
 };
+
+export const getPosts = ({
+  qs
+}) => {
+  return request({
+    url: '/api/post?q=' + qs,
+    method: 'get'
+  });
+};

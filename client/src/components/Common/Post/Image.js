@@ -1,7 +1,6 @@
 import React from 'react';
-import image from 'assets/sample-image.jpg';
 
-const Image = () => {
+const Image = ({image}) => {
   return (
     <img className="ui flid image" src={image} alt="" />
   );
