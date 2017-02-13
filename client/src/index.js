@@ -27,6 +27,7 @@ ReactDOM.render(
         <Route path="bookmark/:username" component={Bookmark} />
         <Route path="goal/:username" component={Goal} />
         <Route path="write" component={Write} />
+        <Route path="write/:postId" component={Write} />
         <Route path="friend" component={Friend} />
         <Route path="search/:hashtag" component={Search} />
         <Route path="*" component={NotFound} />

@@ -8,6 +8,10 @@ import CommentList from './CommentList';
 import CommentInput from './CommentInput';
 
 class Post extends Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  };
+
   handleDeletePost = async () => {
     const {PostActions, data} = this.props;
 
@@ -17,15 +21,20 @@ class Post extends Component {
     }
   }
 
+  handleEditPost = () => {
+    const {data} = this.props;
+
+    this.context.router.push('/write/' + data._id);
+  }
+
   render() {
     const {session, data} = this.props;
-
-    console.log('post data: ', data);
 
     return (
       <div className="post">
         <UserInfo
           onDeletePost={this.handleDeletePost}
+          onEditPost={this.handleEditPost}
           session={session}
           writer={data.writer}
           follow={data.follow}

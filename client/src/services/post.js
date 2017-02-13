@@ -32,3 +32,19 @@ export const deletePost = ({
     method: 'delete'
   });
 };
+
+export const editPost = ({
+  postId,
+  image,
+  description
+}) => {
+  const data = new FormData();
+  if (image) data.append('image', image);
+  if (description) data.append('description', description);
+
+  return request({
+    url: '/api/post/' + postId,
+    method: 'put',
+    data
+  });
+}

@@ -1,15 +1,19 @@
-import { handleActions } from 'redux-actions';
+import { createAction, handleActions } from 'redux-actions';
 import { Map, List } from 'immutable';
 import Request, { requize, pend, fulfill, reject } from 'utils/requestStatus';
 
 import * as service from 'services/post';
 
 /* actions */
+const RESET_POST = 'post/RESET_POST';
 const WRITE_POST = requize('post/WRITE_POST');
 const GET_POSTS = requize('post/GET_POSTS');
 const DELETE_POST = requize('post/DELETE_POST');
+const EDIT_POST = requize('/post/EDIT_POST');
 
 /* action creators */
+export const resetPost = createAction(RESET_POST);
+
 export const writePost = (image, description) => ({
   type: WRITE_POST.DEFAULT,
   payload: {
@@ -31,18 +35,31 @@ export const deletePost = (postId) => ({
   }
 });
 
+export const editPost = (postId, image, description) => ({
+  type: EDIT_POST.DEFAULT,
+  payload: {
+    promise: service.editPost({ postId, image, description })
+  }
+});
+
 /* initialState */
 const initialState = Map({
   requests: Map({
     write: Request(),
     getPosts: Request(),
-    deletePost: Request()
+    deletePost: Request(),
+    editPost: Request()
   }),
   post: List()
 });
 
 /* reducer */
 export default handleActions({
+
+  // RESET POST
+  [RESET_POST]: (state, action) => {
+    return state.setIn(['post'], List());
+  },
 
   // WRITE POST
   [WRITE_POST.PENDING]: (state, action) => {
@@ -85,6 +102,23 @@ export default handleActions({
   [DELETE_POST.REJECTED]: (state, action) => {
     const error = action.payload;
     return reject(state, 'deletePost', error);
+  },
+
+  // EDIT POST
+  [EDIT_POST.PENDING]: (state, action) => {
+    return pend(state, 'editPost');
+  },
+  [EDIT_POST.FULFILLED]: (state, action) => {
+    // const {data} = action.payload;
+    // const index = state.get('post').findIndex(list => {
+    //   return list._id === data._id
+    // });
+    // const changed = state.updateIn(['post'], list => list.delete(index));
+    return fulfill(state, 'editPost');
+  },
+  [EDIT_POST.REJECTED]: (state, action) => {
+    const error = action.payload;
+    return reject(state, 'editPost', error);
   },
 
 }, initialState);

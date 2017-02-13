@@ -55,6 +55,13 @@ class Feed extends Component {
       </div>
     );
   }
+
+  componentWillUnmount() {
+    const {PostActions} = this.props;
+
+    PostActions.resetPost();
+  }
+
 }
 
 Feed = connect(

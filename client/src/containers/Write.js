@@ -17,13 +17,40 @@ class Write extends Component {
 
   state = {
     image: null,
-    description: ''
+    preview: '',
+    description: '',
+    isEditMode: false
   };
 
   componentDidMount() {
+    const { params } = this.props;
+
     document.body.classList.add('hide-scroll');
 
     this.checkSession();
+
+    if (params.postId) {
+      // if param exists, edit    
+      this.setState({
+        isEditMode: true
+      });
+
+      // TODO: get post by postId
+      // TODO: image, description vlidation when edit mode
+
+      // const data = this.props.status.post.get('post').toJS();
+      // const findedPost = data.find(post => post._id === params.postId);
+      // if (findedPost) {
+      //   this.setState({
+      //     preview: findedPost.post.image,
+      //     description: findedPost.post.description
+      //   });
+      // } else {
+      //   alert.error('다시 시도해 주세요');
+      //   this.context.router.push('/');
+      // }
+    }
+
   }
 
   componentWillUnmount() {
@@ -64,15 +91,30 @@ class Write extends Component {
     }
   }
 
+  handleEditpost = async () => {
+    const {PostActions} = this.props;
+    const {image, description} = this.state;
+    const { params } = this.props;
+
+    try {
+      await PostActions.editPost(params.postId, image, description);
+      this.context.router.push('/');
+    } catch (e) {
+      alert('다시 시도해 주세요!');
+    }
+  }
+
   handleUploadImage = (image) => {
     this.setState({
-      image: image
+      image: image,
+      preview: image.preview
     });
   }
 
   handleRemoveImage = () => {
     this.setState({
-      image: null
+      image: null,
+      preview: ''
     });
   }
 
@@ -83,6 +125,8 @@ class Write extends Component {
   }
 
   render() {
+    const {isEditMode, preview, description} = this.state;
+
     return (
       <div >
 
@@ -90,14 +134,20 @@ class Write extends Component {
           <div className="write-container">
             <PageTitle title="공유하기" />
             <UploadImage
+              preview={preview}
               onUpload={this.handleUploadImage}
               onRemove={this.handleRemoveImage} />
-            <WriteInput onChange={this.handleChange} />
+            <WriteInput
+              description={description}
+              onChange={this.handleChange} />
           </div>
         </div>
 
         <div className="write-footer">
-          <WriteButton onWritePost={this.handleWritePost} />
+          <WriteButton
+            isEditMode={isEditMode}
+            onEditPost={this.handleEditpost}
+            onWritePost={this.handleWritePost} />
         </div>
       </div>
     );
