@@ -7,7 +7,6 @@ class App extends Component {
     console.log('App componentDidMount');
   }
 
-
   render() {
     const { location } = this.props;
     const re = /auth/;

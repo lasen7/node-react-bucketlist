@@ -40,25 +40,3 @@ class Header extends Component {
 }
 
 export default Header;
-
-      /*<Menu icon fluid widths={5}>
-        <Menu.Item name='gamepad' active={activeItem === 'gamepad'} onClick={this.handleItemClick}>
-          <Icon name='gamepad' />
-        </Menu.Item>
-
-        <Menu.Item name='video camera' active={activeItem === 'video camera'} onClick={this.handleItemClick}>
-          <Icon name='video camera' />
-        </Menu.Item>
-
-        <Menu.Item name='video play' active={activeItem === 'video play'} onClick={this.handleItemClick}>
-          <Icon name='video play' />
-        </Menu.Item>
-
-        <Menu.Item name='video play' active={activeItem === 'video play'} onClick={this.handleItemClick}>
-          <Icon name='video play' />
-        </Menu.Item>
-
-        <Menu.Item name='video play' active={activeItem === 'video play'} onClick={this.handleItemClick}>
-          <Icon name='video play' />
-        </Menu.Item>
-      </Menu>*/

@@ -4,6 +4,8 @@ import { Modal } from 'semantic-ui-react'
 import { FollowInfoList } from 'components';
 
 const Information = (props, context) => {
+  const {status} = props;
+  const profile = status.profile.get('profile').toJS();
 
   const leaveTo = (path) => {
     context.router.push(path);
@@ -11,14 +13,14 @@ const Information = (props, context) => {
 
   const follower = (
     <div className="content">
-      <div>1</div>
+      <div>{profile.count.follower}</div>
       <div>팔로워</div>
     </div>
   );
 
   const followee = (
     <div className="content">
-      <div>1</div>
+      <div>{profile.count.followee}</div>
       <div>팔로잉</div>
     </div>
   );
@@ -29,7 +31,7 @@ const Information = (props, context) => {
         <div className="row">
           <div className="column">
             <div className="content" onClick={() => leaveTo('/post/1234')}>
-              <div>1</div>
+              <div>{profile.count.post}</div>
               <div>게시물</div>
             </div>
           </div>
@@ -52,13 +54,13 @@ const Information = (props, context) => {
         <div className="row">
           <div className="column">
             <div className="content" onClick={() => leaveTo('/bookmark/1234')}>
-              <div>1</div>
+              <div>{profile.count.bookmark}</div>
               <div>북마크</div>
             </div>
           </div>
           <div className="column">
             <div className="content" onClick={() => leaveTo('/goal/1234')}>
-              <div>1</div>
+              <div>{profile.count.goal.done} / {profile.count.goal.total}</div>
               <div>목표</div>
             </div>
           </div>

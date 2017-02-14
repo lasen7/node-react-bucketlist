@@ -7,7 +7,7 @@ const ProfileWrapper = (props) => {
   return (
     <div className="profile">
       <UserInfo {...props} />
-      <Information />
+      <Information {...props} />
     </div>
   );
 };

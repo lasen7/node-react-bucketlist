@@ -9,28 +9,29 @@ const UserInfo = ({AuthActions, status}) => {
     document.location.href = '/auth';
   };
 
-  // status.auth is Map
   const {auth} = status;
   const username = auth.getIn(['session', 'common_profile', 'username']);
-  const fullname = auth.getIn(['session', 'common_profile', 'fullname']);
+  const profile = status.profile.get('profile').toJS();
 
   return (
     <div className="user-info">
       <div
         className="alarm-wrapper"
         onClick={handleLogout}>
-        <i className="teal log out circular inverted icon"></i>
+        {username === profile.username ?
+          <i className="teal log out circular inverted icon"></i> : undefined}
       </div>
 
       <div className="thumbnail-wrapper">
-        <i className="write teal circular inverted icon"></i>
+        {username === profile.username ?
+          <i className="write teal circular inverted icon"></i> : undefined}
         <img className="ui thumbnail circular image" src="https://imgh.us/user_11.svg" alt="" />
       </div>
 
-      <div className="username">{username}</div>
+      <div className="username">{profile.username}</div>
 
       <div className="fullname">
-        {fullname}
+        {profile.fullname}
         <i className="write icon"></i>
       </div>
 
