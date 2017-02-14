@@ -7,6 +7,7 @@ import * as bookmark from './bookmark';
 import * as notice from './notice';
 import * as report from './report';
 import * as tag from './tag';
+import * as profile from './profile';
 
 export {
   account,
@@ -17,5 +18,6 @@ export {
   bookmark,
   notice,
   report,
-  tag
+  tag,
+  profile
 };

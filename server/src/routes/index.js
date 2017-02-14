@@ -8,6 +8,7 @@ import bookmark from './bookmark';
 import notice from './notice';
 import report from './report';
 import tag from './tag';
+import profile from './profile';
 
 const router = express.Router();
 
@@ -20,5 +21,6 @@ router.use('/bookmark', bookmark);
 router.use('/notice', notice);
 router.use('/report', report);
 router.use('/tag', tag);
+router.use('/profile', profile);
 
 export default router;
