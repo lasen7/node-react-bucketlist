@@ -4,6 +4,8 @@ import { Link } from 'react-router';
 
 class Header extends Component {
   render() {
+    const {username} = this.props;
+
     return (
 
       <div className="header">
@@ -12,7 +14,7 @@ class Header extends Component {
 
           <div className="menu">
             <div className="icon-wrapper">
-              <Link to="/profile/1234"><i className="user icon" ></i></Link>
+              <Link to={`/profile/${username}`}><i className="user icon" ></i></Link>
             </div>
 
             <div className="icon-wrapper">
@@ -37,6 +39,10 @@ class Header extends Component {
       </div>
     )
   }
+}
+
+Header.propTypes = {
+  username: React.PropTypes.string
 }
 
 export default Header;
