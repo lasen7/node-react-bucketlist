@@ -345,7 +345,11 @@ export const likePost = (req, res, next) => {
       }
     })
     .then(() => {
-      res.send({ msg: 'SUCCESS' });
+      res.send({
+        msg: 'SUCCESS',
+        postId: req.params.postId,
+        username: req.user.common_profile.username
+      });
     })
     .catch(err => {
       next(err);
