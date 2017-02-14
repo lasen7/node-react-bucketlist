@@ -10,6 +10,7 @@ const WRITE_POST = requize('post/WRITE_POST');
 const GET_POSTS = requize('post/GET_POSTS');
 const DELETE_POST = requize('post/DELETE_POST');
 const EDIT_POST = requize('/post/EDIT_POST');
+const GET_POST = requize('post/GET_POST');
 
 /* action creators */
 export const resetPost = createAction(RESET_POST);
@@ -42,15 +43,24 @@ export const editPost = (postId, image, description) => ({
   }
 });
 
+export const getPost = (postId) => ({
+  type: GET_POST.DEFAULT,
+  payload: {
+    promise: service.getPost({ postId })
+  }
+});
+
 /* initialState */
 const initialState = Map({
   requests: Map({
     write: Request(),
     getPosts: Request(),
     deletePost: Request(),
-    editPost: Request()
+    editPost: Request(),
+    getPost: Request()
   }),
-  post: List()
+  post: List(),
+  postDetail: null
 });
 
 /* reducer */
@@ -119,6 +129,20 @@ export default handleActions({
   [EDIT_POST.REJECTED]: (state, action) => {
     const error = action.payload;
     return reject(state, 'editPost', error);
+  },
+
+  // GET POST
+  [GET_POST.PENDING]: (state, action) => {
+    return pend(state, 'getPost');
+  },
+  [GET_POST.FULFILLED]: (state, action) => {
+    const {data} = action.payload;
+    const changed = state.set('postDetail', data);
+    return fulfill(changed, 'getPost');
+  },
+  [GET_POST.REJECTED]: (state, action) => {
+    const error = action.payload;
+    return reject(state, 'getPost', error);
   },
 
 }, initialState);

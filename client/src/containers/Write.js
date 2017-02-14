@@ -22,8 +22,8 @@ class Write extends Component {
     isEditMode: false
   };
 
-  componentDidMount() {
-    const { params } = this.props;
+  async componentDidMount() {
+    const { params, PostActions } = this.props;
 
     document.body.classList.add('hide-scroll');
 
@@ -35,22 +35,19 @@ class Write extends Component {
         isEditMode: true
       });
 
-      // TODO: get post by postId
-      // TODO: image, description vlidation when edit mode
+      try {
+        await PostActions.getPost(params.postId);
 
-      // const data = this.props.status.post.get('post').toJS();
-      // const findedPost = data.find(post => post._id === params.postId);
-      // if (findedPost) {
-      //   this.setState({
-      //     preview: findedPost.post.image,
-      //     description: findedPost.post.description
-      //   });
-      // } else {
-      //   alert.error('다시 시도해 주세요');
-      //   this.context.router.push('/');
-      // }
+        const {post} = this.props.status.post.get('postDetail');
+        this.setState({
+          preview: post.image,
+          description: post.description
+        });
+      } catch (e) {
+        alert.error('다시 시도해 주세요');
+        this.context.router.push('/');
+      }
     }
-
   }
 
   componentWillUnmount() {
@@ -70,10 +67,10 @@ class Write extends Component {
   }
 
   handleWritePost = async () => {
-    const {image, description} = this.state;
+    const {preview, image, description} = this.state;
     const {PostActions} = this.props;
 
-    if (!image) {
+    if (!preview) {
       alert.error('이미지를 올려주세요');
       return;
     }
@@ -93,8 +90,18 @@ class Write extends Component {
 
   handleEditpost = async () => {
     const {PostActions} = this.props;
-    const {image, description} = this.state;
+    const {preview, image, description} = this.state;
     const { params } = this.props;
+
+    if (!preview) {
+      alert.error('이미지를 올려주세요');
+      return;
+    }
+
+    if (!description) {
+      alert.error('설명을 작성해 주세요');
+      return;
+    }
 
     try {
       await PostActions.editPost(params.postId, image, description);

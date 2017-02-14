@@ -48,3 +48,12 @@ export const editPost = ({
     data
   });
 }
+
+export const getPost = ({
+  postId
+}) => {
+  return request({
+    url: '/api/post/' + postId,
+    method: 'get'
+  });
+}
