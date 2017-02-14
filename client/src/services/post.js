@@ -57,3 +57,21 @@ export const getPost = ({
     method: 'get'
   });
 }
+
+export const likePost = ({
+  postId
+}) => {
+  return request({
+    url: `/api/post/${postId}/like`,
+    method: 'put'
+  });
+}
+
+export const unlikePost = ({
+  postId
+}) => {
+  return request({
+    url: `/api/post/${postId}/like`,
+    method: 'delete'
+  });
+}

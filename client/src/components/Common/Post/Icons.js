@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Icons = ({session, like, commentCount}) => {
+const Icons = ({onLikePost, session, like, commentCount}) => {
   const username = session.common_profile.username;
   const isLiked = like.indexOf(username) === -1 ? false : true;
 
@@ -8,7 +8,9 @@ const Icons = ({session, like, commentCount}) => {
     <div className="icons">
 
       <div className="heart-wrapper">
-        <i className={`heart outline large icon ${isLiked ? 'teal' : ''}`}></i>
+        <i
+          onClick={onLikePost}
+          className={`heart outline large icon ${isLiked ? 'teal' : ''}`}></i>
         <span className="icon-count">{like.length}</span>
       </div>
 

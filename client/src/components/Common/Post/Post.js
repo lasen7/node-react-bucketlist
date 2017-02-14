@@ -27,6 +27,15 @@ class Post extends Component {
     this.context.router.push('/write/' + data._id);
   }
 
+  handleLikePost = async () => {
+    const {PostActions, data} = this.props;
+
+    try {
+      await PostActions.likePost(data._id);
+    } catch (e) {
+    }
+  }
+
   render() {
     const {session, data} = this.props;
 
@@ -43,6 +52,7 @@ class Post extends Component {
           image={data.post.image}
         />
         <Icons
+          onLikePost={this.handleLikePost}
           session={session}
           like={data.post.likes}
           commentCount={data.comment_count}

@@ -11,6 +11,8 @@ const GET_POSTS = requize('post/GET_POSTS');
 const DELETE_POST = requize('post/DELETE_POST');
 const EDIT_POST = requize('/post/EDIT_POST');
 const GET_POST = requize('post/GET_POST');
+const LIKE_POST = requize('/post/LIKE_POST');
+const UNLIKE_POST = requize('/post/UNLIKE_POST');
 
 /* action creators */
 export const resetPost = createAction(RESET_POST);
@@ -50,6 +52,20 @@ export const getPost = (postId) => ({
   }
 });
 
+export const likePost = (postId) => ({
+  type: LIKE_POST.DEFAULT,
+  payload: {
+    promise: service.likePost({ postId })
+  }
+});
+
+export const unlikePost = (postId) => ({
+  type: UNLIKE_POST.DEFAULT,
+  payload: {
+    promise: service.unlikePost({ postId })
+  }
+});
+
 /* initialState */
 const initialState = Map({
   requests: Map({
@@ -57,7 +73,9 @@ const initialState = Map({
     getPosts: Request(),
     deletePost: Request(),
     editPost: Request(),
-    getPost: Request()
+    getPost: Request(),
+    likePost: Request(),
+    unlikePost: Request()
   }),
   post: List(),
   postDetail: null
@@ -143,6 +161,28 @@ export default handleActions({
   [GET_POST.REJECTED]: (state, action) => {
     const error = action.payload;
     return reject(state, 'getPost', error);
+  },
+
+  // LIKE POST
+  [LIKE_POST.PENDING]: (state, action) => {
+    return pend(state, 'likePost');
+  },
+  [LIKE_POST.FULFILLED]: (state, action) => {
+    // TODO:stop here for zigbang test
+    const {data} = action.payload;
+    const changed = state.updateIn(['post'], list =>
+      list.update(
+        list.findIndex(item =>
+          item._id === data._id
+        ),
+        item => item.post.likes.push(data.username)
+      )
+    );
+    return fulfill(changed, 'likePost');
+  },
+  [LIKE_POST.REJECTED]: (state, action) => {
+    const error = action.payload;
+    return reject(state, 'likePost', error);
   },
 
 }, initialState);
