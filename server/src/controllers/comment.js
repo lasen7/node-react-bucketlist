@@ -84,6 +84,7 @@ export const getComments = (req, res, next) => {
 
       let result = {};
       result.msg = 'SUCCESS';
+      result.postId = req.params.postId;
       result.data = post.comments;
       res.send(result);
     })
