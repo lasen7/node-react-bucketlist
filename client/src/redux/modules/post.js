@@ -180,4 +180,25 @@ export default handleActions({
     return reject(state, 'likePost', error);
   },
 
+  // UNLIKE POST
+  [UNLIKE_POST.PENDING]: (state, action) => {
+    return pend(state, 'unlikePost');
+  },
+  [UNLIKE_POST.FULFILLED]: (state, action) => {
+    const {data} = action.payload;
+    const index = state.get('post').findIndex(item =>
+      item.get('_id') === data.postId
+    );
+    const changed = state.updateIn(['post', index, 'post', 'likes'], likes =>
+      likes.delete(likes.findIndex(item =>
+        item === data.username)
+      )
+    );
+    return fulfill(changed, 'unlikePost');
+  },
+  [UNLIKE_POST.REJECTED]: (state, action) => {
+    const error = action.payload;
+    return reject(state, 'unlikePost', error);
+  },
+
 }, initialState);

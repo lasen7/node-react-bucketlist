@@ -36,6 +36,15 @@ class Post extends Component {
     }
   }
 
+  handleUnlikePost = async () => {
+    const {PostActions, data} = this.props;
+
+    try {
+      await PostActions.unlikePost(data._id);
+    } catch (e) {
+    }
+  }
+
   render() {
     const {session, data} = this.props;
 
@@ -53,6 +62,7 @@ class Post extends Component {
         />
         <Icons
           onLikePost={this.handleLikePost}
+          onUnLikePost={this.handleUnlikePost}
           session={session}
           like={data.post.likes}
           commentCount={data.comment_count}
