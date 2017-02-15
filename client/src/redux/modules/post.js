@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
-import { Map, List } from 'immutable';
+import { Map, List, fromJS } from 'immutable';
 import Request, { requize, pend, fulfill, reject } from 'utils/requestStatus';
 
 import * as service from 'services/post';
@@ -107,7 +107,7 @@ export default handleActions({
   },
   [GET_POSTS.FULFILLED]: (state, action) => {
     const {data} = action.payload;
-    const changed = state.updateIn(['post'], list => list.push(...data.data));
+    const changed = state.set('post', fromJS(data.data));
     return fulfill(changed, 'getPosts');
   },
   [GET_POSTS.REJECTED]: (state, action) => {
@@ -168,16 +168,11 @@ export default handleActions({
     return pend(state, 'likePost');
   },
   [LIKE_POST.FULFILLED]: (state, action) => {
-    // TODO:stop here for zigbang test
     const {data} = action.payload;
-    const changed = state.updateIn(['post'], list =>
-      list.update(
-        list.findIndex(item =>
-          item._id === data._id
-        ),
-        item => item.post.likes.push(data.username)
-      )
+    const index = state.get('post').findIndex(item =>
+      item.get('_id') === data.postId
     );
+    const changed = state.updateIn(['post', index, 'post', 'likes'], likes => likes.push(data.username));
     return fulfill(changed, 'likePost');
   },
   [LIKE_POST.REJECTED]: (state, action) => {
