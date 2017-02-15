@@ -75,3 +75,17 @@ export const unlikePost = ({
     method: 'delete'
   });
 }
+
+export const writeComment = ({
+  postId,
+  comment
+}) => {
+  const data = new FormData();
+  data.append('comment', comment);
+
+  return request({
+    url: `/api/comment/${postId}`,
+    method: 'post',
+    data
+  });
+}

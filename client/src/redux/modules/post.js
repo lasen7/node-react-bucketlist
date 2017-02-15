@@ -14,6 +14,8 @@ const GET_POST = requize('post/GET_POST');
 const LIKE_POST = requize('/post/LIKE_POST');
 const UNLIKE_POST = requize('/post/UNLIKE_POST');
 
+const WRITE_COMMENT = requize('post/WRITE_COMMENT');
+
 /* action creators */
 export const resetPost = createAction(RESET_POST);
 
@@ -66,6 +68,13 @@ export const unlikePost = (postId) => ({
   }
 });
 
+export const writeComment = (postId, comment) => ({
+  type: WRITE_COMMENT.DEFAULT,
+  payload: {
+    promise: service.writeComment({ postId, comment })
+  }
+});
+
 /* initialState */
 const initialState = Map({
   requests: Map({
@@ -75,7 +84,8 @@ const initialState = Map({
     editPost: Request(),
     getPost: Request(),
     likePost: Request(),
-    unlikePost: Request()
+    unlikePost: Request(),
+    writeComment: Request()
   }),
   post: List(),
   postDetail: null
@@ -199,6 +209,18 @@ export default handleActions({
   [UNLIKE_POST.REJECTED]: (state, action) => {
     const error = action.payload;
     return reject(state, 'unlikePost', error);
+  },
+
+  // WRITE COMMENT
+  [WRITE_COMMENT.PENDING]: (state, action) => {
+    return pend(state, 'writeComment');
+  },
+  [WRITE_COMMENT.FULFILLED]: (state, action) => {
+    return fulfill(state, 'writeComment');
+  },
+  [WRITE_COMMENT.REJECTED]: (state, action) => {
+    const error = action.payload;
+    return reject(state, 'writeComment', error);
   },
 
 }, initialState);
