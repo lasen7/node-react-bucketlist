@@ -129,12 +129,17 @@
     .open-comment {
       display: inline-block;
       color: #999;
-      cursor: pointer;
     }
 
     .comment {
+      margin-bottom: 0.3rem;
+
       .username {
         font-weight: 600;
+      }
+
+      .content {
+        line-height: 1.3rem;
       }
     }
   }

@@ -15,6 +15,7 @@ const LIKE_POST = requize('/post/LIKE_POST');
 const UNLIKE_POST = requize('/post/UNLIKE_POST');
 
 const WRITE_COMMENT = requize('post/WRITE_COMMENT');
+const GET_COMMENTS = requize('post/GET_COMMENTS');
 
 /* action creators */
 export const resetPost = createAction(RESET_POST);
@@ -75,6 +76,13 @@ export const writeComment = (postId, comment) => ({
   }
 });
 
+export const getComments = (postId) => ({
+  type: GET_COMMENTS.DEFAULT,
+  payload: {
+    promise: service.getComments({ postId })
+  }
+});
+
 /* initialState */
 const initialState = Map({
   requests: Map({
@@ -85,7 +93,8 @@ const initialState = Map({
     getPost: Request(),
     likePost: Request(),
     unlikePost: Request(),
-    writeComment: Request()
+    writeComment: Request(),
+    getComments: Request()
   }),
   post: List(),
   postDetail: null
@@ -222,5 +231,25 @@ export default handleActions({
     const error = action.payload;
     return reject(state, 'writeComment', error);
   },
+
+  // GET COMMENTS
+  [GET_COMMENTS.PENDING]: (state, action) => {
+    return pend(state, 'getComments');
+  },
+  [GET_COMMENTS.FULFILLED]: (state, action) => {
+    const {data} = action.payload;
+    const index = state.get('post').findIndex(item =>
+      item.get('_id') === data.postId
+    );
+    const changed = state.updateIn(['post', index], item =>
+      item.set('comments', fromJS(data.data))
+    )
+    return fulfill(changed, 'getComments');
+  },
+  [GET_COMMENTS.REJECTED]: (state, action) => {
+    const error = action.payload;
+    return reject(state, 'getComments', error);
+  },
+
 
 }, initialState);

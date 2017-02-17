@@ -1,10 +1,12 @@
 import React from 'react';
 
-const Comment = () => {
+const Comment = ({data}) => {
+  console.log('data: ', data);
+
   return (
     <div className="comment">
-      {/*<span className="username">username</span> &nbsp;
-      <span>Lorem ipsum dolor sit amet.</span>*/}
+      <span className="username">{data.accountId.common_profile.username}</span> &nbsp;
+      <span className="content">{data.comment}</span>
     </div>
   );
 };

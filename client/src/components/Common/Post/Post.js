@@ -54,6 +54,15 @@ class Post extends Component {
     }
   }
 
+  handleGetComments = async () => {
+    const {PostActions, data} = this.props;
+
+    try {
+      await PostActions.getComments(data._id);
+    } catch (e) {
+    }
+  }
+
   render() {
     const {session, data} = this.props;
 
@@ -80,7 +89,10 @@ class Post extends Component {
           description={data.post.description}
           date={data.post.date}
         />
-        <CommentList />
+        <CommentList
+          comments={data.comments || []}
+          onGetComments={this.handleGetComments}
+          commentCount={data.comment_count} />
         <CommentInput
           onWriteComment={this.handleWirteComment}
         />

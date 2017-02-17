@@ -89,3 +89,12 @@ export const writeComment = ({
     data
   });
 }
+
+export const getComments = ({
+  postId
+}) => {
+  return request({
+    url: `/api/comment/${postId}`,
+    method: 'get'
+  });
+}
