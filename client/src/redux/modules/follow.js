@@ -8,6 +8,7 @@ import * as service from 'services/follow';
 const FOLLOW = requize('follow/FOLLOW');
 const UNFOLLOW = requize('follow/UNFOLLOW');
 const GET_FOLLOWEE = requize('follow/GET_FOLLOWEE');
+const GET_FOLLOWER = requize('follow/GET_FOLLOWER');
 
 /* action creators */
 export const follow = (username) => ({
@@ -31,12 +32,20 @@ export const getFollowee = (username) => ({
   }
 });
 
+export const getFollower = (username) => ({
+  type: GET_FOLLOWER.DEFAULT,
+  payload: {
+    promise: service.getFollower({ username })
+  }
+});
+
 /* initialState */
 const initialState = Map({
   requests: Map({
     follow: Request(),
     unfollow: Request(),
-    getFollowee: Request()
+    getFollowee: Request(),
+    getFollower: Request()
   }),
   followee: List(),
   follower: List()
@@ -84,6 +93,20 @@ export default handleActions({
   [GET_FOLLOWEE.REJECTED]: (state, action) => {
     const error = action.payload;
     return reject(state, 'getFollowee', error);
+  },
+
+  // GET FOLLOWER
+  [GET_FOLLOWER.PENDING]: (state, action) => {
+    return pend(state, 'getFollower');
+  },
+  [GET_FOLLOWER.FULFILLED]: (state, action) => {
+    const {data} = action.payload;
+    const changed = state.set('follower', fromJS(data.data));
+    return fulfill(changed, 'getFollower');
+  },
+  [GET_FOLLOWER.REJECTED]: (state, action) => {
+    const error = action.payload;
+    return reject(state, 'getFollower', error);
   }
 
 }, initialState);

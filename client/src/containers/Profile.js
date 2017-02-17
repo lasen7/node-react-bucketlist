@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 
 import * as auth from 'redux/modules/auth';
 import * as profile from 'redux/modules/profile';
+import * as follow from 'redux/modules/follow';
 
 import alert from 'alertifyjs';
 
@@ -58,12 +59,14 @@ Profile = connect(
   state => ({
     status: {
       auth: state.auth,
-      profile: state.profile
+      profile: state.profile,
+      follow: state.follow
     }
   }),
   dispatch => ({
     AuthActions: bindActionCreators(auth, dispatch),
-    ProfileActions: bindActionCreators(profile, dispatch)
+    ProfileActions: bindActionCreators(profile, dispatch),
+    FollowActions: bindActionCreators(follow, dispatch)
   })
 )(Profile);
 

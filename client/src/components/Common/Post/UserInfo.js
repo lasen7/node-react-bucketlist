@@ -13,9 +13,6 @@ const UserInfo = ({
   follow
 }) => {
 
-  // TODO: write/postId로 링크를 해야하는데 이 컴포넌트에서 할지
-  // 아니면 Post 컴포넌트에서 할지???
-
   const followView = (
     <div className="option">
       <span

@@ -22,7 +22,16 @@ export const getFollowee = ({
   username
 }) => {
   return request({
-    url: `api/follow/${username}/followee`,
+    url: `/api/follow/${username}/followee`,
+    method: 'get'
+  });
+}
+
+export const getFollower = ({
+  username
+}) => {
+  return request({
+    url: `/api/follow/${username}/follower`,
     method: 'get'
   });
 }

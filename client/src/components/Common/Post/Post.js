@@ -77,7 +77,10 @@ class Post extends Component {
     const findFollowee = followee.find(item =>
       item.followee.common_profile.username === data.writer
     );
-    const isFollow = findFollowee ? true : false;
+    let isFollow = findFollowee ? true : false;
+    if (data.writer === session.common_profile.username) {
+      isFollow = true;
+    }
 
     return (
       <div className="post">

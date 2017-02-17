@@ -4,26 +4,42 @@ import { Modal } from 'semantic-ui-react'
 import { FollowInfoList } from 'components';
 
 const Information = (props, context) => {
-  const {status} = props;
+  const {status, FollowActions} = props;
   const profile = status.profile.get('profile').toJS();
+  const followee = status.follow.get('followee').toJS();
+  const follower = status.follow.get('follower').toJS();
 
   const leaveTo = (path) => {
     context.router.push(path);
   };
 
-  const follower = (
+  const followerView = (
     <div className="content">
       <div>{profile.count.follower}</div>
       <div>팔로워</div>
     </div>
   );
 
-  const followee = (
+  const followeeView = (
     <div className="content">
       <div>{profile.count.followee}</div>
       <div>팔로잉</div>
     </div>
   );
+
+  const handleFollowee = async () => {
+    try {
+      await FollowActions.getFollowee(profile.username);
+    } catch (e) {
+    }
+  };
+
+  const handleFollower = async () => {
+    try {
+      await FollowActions.getFollower(profile.username);
+    } catch (e) {
+    }
+  };
 
   return (
     <div className="information">
@@ -37,16 +53,21 @@ const Information = (props, context) => {
           </div>
 
           <div className="column">
-            <Modal size="small" trigger={follower}>
+            <Modal size="small" trigger={followerView} onOpen={handleFollower}>
               <Modal.Header>팔로워</Modal.Header>
-              <FollowInfoList />
+              <FollowInfoList
+                isFollowing={false}
+                follow={follower}
+              />
             </Modal>
           </div>
 
           <div className="column">
-            <Modal size="small" trigger={followee}>
+            <Modal size="small" trigger={followeeView} onOpen={handleFollowee}>
               <Modal.Header>팔로잉</Modal.Header>
-              <FollowInfoList />
+              <FollowInfoList
+                isFollowing={true}
+                follow={followee} />
             </Modal>
           </div>
         </div>
