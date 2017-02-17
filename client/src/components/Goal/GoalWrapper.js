@@ -3,11 +3,11 @@ import React from 'react';
 import AddItem from './AddItem';
 import CheckList from './CheckList';
 
-const GoalWrapper = () => {
+const GoalWrapper = (props) => {
   return (
     <div className="goal">
       <CheckList />
-      <AddItem />
+      <AddItem GoalActions={props.GoalActions} />
     </div>
   );
 };

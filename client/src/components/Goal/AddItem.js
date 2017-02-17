@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import WriteItem from './WriteItem';
 
-class componentName extends Component {
+class AddItem extends Component {
 
   state = {
     isWrite: false
@@ -14,6 +14,16 @@ class componentName extends Component {
     });
   }
 
+  handleSave = async (title) => {
+    const {GoalActions} = this.props;
+
+    try {
+      await GoalActions.writeGoal(title);
+      this.toggleWrite();
+    } catch (e) {
+    }
+  }
+
   render() {
     const addItem = (
       <div className="add-item" onClick={this.toggleWrite}>Add an item...</div>
@@ -21,10 +31,14 @@ class componentName extends Component {
 
     return (
       <div className="">
-        {this.state.isWrite ? <WriteItem onCancel={this.toggleWrite} /> : addItem}
+        {this.state.isWrite ? <WriteItem onSave={this.handleSave} onCancel={this.toggleWrite} /> : addItem}
       </div>
     );
   }
 }
 
-export default componentName;
+AddItem.propTypes = {
+  GoalActions: React.PropTypes.object
+};
+
+export default AddItem;

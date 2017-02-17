@@ -9,10 +9,10 @@ const CheckList = () => {
 
   return (
     <div className="check-list">
-      <Year />
-      <CheckItem />
-      <CheckItem />
-      <div className="ui divider"></div>
+      {/*<Year />*/}
+      {/*{<CheckItem />*/}
+      {/*<CheckItem />}*/}
+      {/*<div className="ui divider"></div>*/}
     </div>
   );
 };
