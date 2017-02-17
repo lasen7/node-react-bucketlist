@@ -19,6 +19,15 @@ Follow.statics.findFollowers = function (followee) {
     .exec();
 };
 
+Follow.statics.findFollowee = function (follower, followee) {
+  return this.find({ follower, followee })
+    .populate('followee', 'common_profile.username common_profile.thumbnail')
+    .select({
+      followee: 1
+    })
+    .exec();
+};
+
 Follow.statics.findFollowees = function (follower) {
   return this.find({ follower })
     .populate('followee', 'common_profile.username common_profile.thumbnail')

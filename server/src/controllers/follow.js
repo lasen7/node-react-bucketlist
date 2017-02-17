@@ -2,7 +2,7 @@ import Follow from '../models/follow';
 import Account from '../models/account';
 import Notice from '../models/notice';
 
-export const follow = (req, res, next) => {
+export const follow = async (req, res, next) => {
   if (!req.user) {
     return res.status(401).send({
       msg: 'Not authorized',
@@ -10,34 +10,63 @@ export const follow = (req, res, next) => {
     });
   }
 
-  let _account = null;
+  try {
+    const account = await Account.findUser(req.params.username);
+    if (!account) {
+      let error = new Error();
+      error.message = 'Not found user';
+      error.code = 400;
+      error.errorCode = 2;
+      throw error;
+    }
 
-  Account.findUser(req.params.username)
-    .then(account => {
-      if (!account) {
-        let error = new Error();
-        error.message = 'Not found user';
-        error.code = 400;
-        error.errorCode = 2;
-        throw error;
-      }
+    const hasFollow = await Follow.findFollow(account._id, req.user._id);
+    if (!hasFollow) {
+      await Notice.addFollow(account._id, req.user._id);
+      await Follow.addFollow(account._id, req.user._id);
+    }
 
-      _account = account;
-
-      return Follow.findFollow(account._id, req.user._id);
-    })
-    .then(follow => {
-      if (!follow) {
-        Follow.addFollow(_account._id, req.user._id);
-        Notice.addFollow(_account._id, req.user._id);
-      }
-    })
-    .then(() => {
-      res.send({ msg: 'SUCCESS' });
-    })
-    .catch(err => {
-      next(err);
+    const follow = await Follow.findFollowee(req.user._id, account._id);
+    res.send({
+      msg: 'SUCCESS',
+      data: follow[0]
     });
+  } catch (e) {
+    next(e);
+  }
+
+  // Account.findUser(req.params.username)
+  //   .then(account => {
+  //     if (!account) {
+  //       let error = new Error();
+  //       error.message = 'Not found user';
+  //       error.code = 400;
+  //       error.errorCode = 2;
+  //       throw error;
+  //     }
+
+  //     _account = account;
+
+  //     return Follow.findFollow(account._id, req.user._id);
+  //   })
+  //   .then(follow => {
+  //     if (!follow) {
+  //       Notice.addFollow(_account._id, req.user._id);
+  //       Follow.addFollow(_account._id, req.user._id);
+  //     }
+  //   })
+  //   .then(() => {
+  //     return Follow.findFollowee(req.user._id, _account._id);
+  //   })
+  //   .then(result => {
+  //     res.send({
+  //       msg: 'SUCCESS',
+  //       data: result[0]
+  //     });
+  //   })
+  //   .catch(err => {
+  //     next(err);
+  //   });
 };
 
 export const unfollow = (req, res, next) => {
