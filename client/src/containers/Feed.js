@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import * as auth from 'redux/modules/auth';
 import * as post from 'redux/modules/post';
+import * as follow from 'redux/modules/follow';
 
 import { Post } from 'components';
 
@@ -14,11 +15,14 @@ class Feed extends Component {
   };
 
   async componentDidMount() {
-    const {PostActions} = this.props;
+    const {PostActions, FollowActions} = this.props;
 
     try {
       this.checkSession();
       await PostActions.getPosts('feed');
+
+      const session = this.props.status.auth.getIn(['session']).toJS();
+      await FollowActions.getFollowee(session.common_profile.username);
     } catch (e) {
     }
   }
@@ -36,13 +40,17 @@ class Feed extends Component {
   }
 
   render() {
+    const {PostActions, FollowActions} = this.props;
     const data = this.props.status.post.toJS();
     const session = this.props.status.auth.getIn(['session']).toJS();
+    const followee = this.props.status.follow.getIn(['followee']).toJS();
 
     const postList = data.post.map(
       (post, index) => (
         <Post
-          PostActions={this.props.PostActions}
+          PostActions={PostActions}
+          FollowActions={FollowActions}
+          followee={followee}
           session={session}
           data={post}
           key={post._id} />
@@ -68,12 +76,14 @@ Feed = connect(
   state => ({
     status: {
       auth: state.auth,
-      post: state.post
+      post: state.post,
+      follow: state.follow
     }
   }),
   dispatch => ({
     AuthActions: bindActionCreators(auth, dispatch),
-    PostActions: bindActionCreators(post, dispatch)
+    PostActions: bindActionCreators(post, dispatch),
+    FollowActions: bindActionCreators(follow, dispatch)
   })
 )(Feed);
 

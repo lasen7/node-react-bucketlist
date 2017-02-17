@@ -43,6 +43,14 @@
       height: 50px;
       position: relative;
 
+      .follow {
+        cursor: pointer;
+
+        &:hover {
+          color: #009688;
+        }
+      }
+
       .ui.dropdown {
         position: absolute;
         top: 50%;

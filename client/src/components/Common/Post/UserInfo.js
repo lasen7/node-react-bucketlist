@@ -4,13 +4,26 @@ import { Link } from 'react-router';
 
 import { Dropdown } from 'semantic-ui-react'
 
-const UserInfo = ({onDeletePost, onEditPost, session, writer, follow}) => {
+const UserInfo = ({
+  onFollow,
+  onDeletePost,
+  onEditPost,
+  session,
+  writer,
+  follow
+}) => {
 
   // TODO: write/postId로 링크를 해야하는데 이 컴포넌트에서 할지
   // 아니면 Post 컴포넌트에서 할지???
 
   const followView = (
-    <div className="option"><span>팔로우</span></div>
+    <div className="option">
+      <span
+        className="follow"
+        onClick={onFollow}>
+        팔로우
+      </span>
+    </div>
   );
 
   return (
@@ -34,7 +47,7 @@ const UserInfo = ({onDeletePost, onEditPost, session, writer, follow}) => {
             </Dropdown.Menu>
           </Dropdown>
         </div>
-        {!follow ? followView : undefined}
+        {follow ? undefined : followView}
       </div>
     </div>
   );

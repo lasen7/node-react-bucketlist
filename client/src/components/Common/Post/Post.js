@@ -63,17 +63,31 @@ class Post extends Component {
     }
   }
 
+  handleFollow = async () => {
+    const {FollowActions, data} = this.props;
+
+    try {
+      await FollowActions.follow(data.writer);
+    } catch (e) {
+    }
+  }
+
   render() {
-    const {session, data} = this.props;
+    const {session, data, followee} = this.props;
+    const findFollowee = followee.find(item =>
+      item.followee.common_profile.username === data.writer
+    );
+    const isFollow = findFollowee ? true : false;
 
     return (
       <div className="post">
         <UserInfo
+          onFollow={this.handleFollow}
           onDeletePost={this.handleDeletePost}
           onEditPost={this.handleEditPost}
           session={session}
           writer={data.writer}
-          follow={data.follow}
+          follow={isFollow}
         />
         <Image
           image={data.post.image}
@@ -103,8 +117,10 @@ class Post extends Component {
 
 Post.propTypes = {
   PostActions: React.PropTypes.object,
+  FollowActions: React.PropTypes.object,
   session: React.PropTypes.object,
-  data: React.PropTypes.object
+  data: React.PropTypes.object,
+  followee: React.PropTypes.array
 };
 
 export default Post;
