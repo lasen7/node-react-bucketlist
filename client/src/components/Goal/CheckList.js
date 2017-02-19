@@ -3,7 +3,9 @@ import React from 'react';
 import Year from './Year';
 import CheckItem from './CheckItem';
 
-const CheckList = ({data}) => {
+const CheckList = ({goalId, data, GoalActions}) => {
+
+  console.log('checklist data: ', data);
 
   const checkList = data.map((value, index, arr) => {
     let curr = arr[index];
@@ -18,6 +20,8 @@ const CheckList = ({data}) => {
             key={currDate}
             year={currDate} />
           <CheckItem
+            goalId={goalId}
+            GoalActions={GoalActions}
             data={curr}
             key={curr._id}
           />
@@ -33,6 +37,8 @@ const CheckList = ({data}) => {
             key={currDate}
             year={currDate} />
           <CheckItem
+            goalId={goalId}
+            GoalActions={GoalActions}
             data={curr}
             key={curr._id}
           />
@@ -42,6 +48,8 @@ const CheckList = ({data}) => {
 
     return (
       <CheckItem
+        goalId={goalId}
+        GoalActions={GoalActions}
         data={curr}
         key={curr._id}
       />
@@ -51,7 +59,10 @@ const CheckList = ({data}) => {
   return (
     <div className="check-list">
       {checkList}
-      <div className="ui divider"></div>
+      {data.length !== 0 ?
+        <div className="ui divider"></div> :
+        undefined
+      }
     </div>
   );
 };

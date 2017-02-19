@@ -21,3 +21,13 @@ export const getGoal = ({
     method: 'get'
   });
 };
+
+export const deleteGoal = ({
+  goalId,
+  goalsId
+}) => {
+  return request({
+    url: `/api/goal/${goalId}/${goalsId}`,
+    method: 'delete'
+  });
+};

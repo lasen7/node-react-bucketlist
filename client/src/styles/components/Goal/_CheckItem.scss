@@ -1,7 +1,13 @@
 .check-item {
-  // margin: 1rem 1rem 2rem 1rem;
   padding: 1rem;
-  // margin-bottom: 1rem;
-  cursor: pointer;
-  // background-color: rgba(0, 0, 0, 0.12);
+  // cursor: pointer;
+
+  .option {
+    float: right;
+  }
+
+  i:hover, i:active {
+    cursor: pointer;
+    color: #009688;
+  }
 }

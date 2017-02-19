@@ -5,10 +5,11 @@ import CheckList from './CheckList';
 
 const GoalWrapper = (props) => {
   const data = props.status.goal.get('goal').toJS();
+  const goalId = props.status.goal.get('goalId')
 
   return (
     <div className="goal">
-      <CheckList data={data} />
+      <CheckList goalId={goalId} data={data} GoalActions={props.GoalActions} />
       <AddItem GoalActions={props.GoalActions} />
     </div>
   );
