@@ -16,7 +16,7 @@ class Feed extends Component {
   };
 
   async componentDidMount() {
-    const {PostActions, FollowActions} = this.props;
+    const {PostActions, FollowActions, BookmarkActions} = this.props;
 
     try {
       this.checkSession();
@@ -24,6 +24,7 @@ class Feed extends Component {
 
       const session = this.props.status.auth.getIn(['session']).toJS();
       await FollowActions.getFollowee(session.common_profile.username);
+      await BookmarkActions.getBookmark(session.common_profile.username);
     } catch (e) {
     }
   }

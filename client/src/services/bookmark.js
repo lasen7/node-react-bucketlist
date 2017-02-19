@@ -19,3 +19,13 @@ export const deleteBookmark = ({
     method: 'delete'
   });
 };
+
+export const getBookmark = ({
+  username
+}) => {
+
+  return request({
+    url: `/api/bookmark/${username}`,
+    method: 'get'
+  });
+};

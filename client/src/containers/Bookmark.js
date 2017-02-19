@@ -14,8 +14,13 @@ class Bookmark extends Component {
   };
 
   async componentDidMount() {
+    const {BookmarkActions} = this.props;
+
     try {
-      this.checkSession();
+      await this.checkSession();
+
+      const session = this.props.status.auth.getIn(['session']).toJS();
+      await BookmarkActions.getBookmark(session.common_profile.username);
     } catch (e) {
     }
   }
@@ -33,10 +38,12 @@ class Bookmark extends Component {
   }
 
   render() {
+    const bookmark = this.props.status.bookmark.getIn(['bookmark']).toJS();
+
     return (
       <div>
         <PageTitle title="북마크" />
-        <PreviewList />
+        <PreviewList data={bookmark} />
       </div>
     );
   }
