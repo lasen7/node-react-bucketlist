@@ -43,6 +43,7 @@ export const getGoals = (req, res, next) => {
       let result = {};
       result.msg = 'SUCCESS';
       result.data = goal ? goal.goals : [];
+      result.goalId = goal ? goal._id : '';
 
       res.send(result);
     })
@@ -129,7 +130,10 @@ export const deleteGoal = (req, res, next) => {
       goal.save();
     })
     .then(() => {
-      res.send({ msg: 'SUCCESS' });
+      res.send({
+        msg: 'SUCCESS',
+        goalsId: req.params.goalsId
+      });
     })
     .catch(err => {
       next(err);
