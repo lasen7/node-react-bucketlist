@@ -72,6 +72,24 @@ class Post extends Component {
     }
   }
 
+  handleAddBookmark = async () => {
+    const {BookmarkActions, data} = this.props;
+
+    try {
+      await BookmarkActions.addBookmark(data._id);
+    } catch (e) {
+    }
+  }
+
+  handleDeleteBookmark = async () => {
+    const {BookmarkActions, data} = this.props;
+
+    try {
+      await BookmarkActions.deleteBookmark(data._id);
+    } catch (e) {
+    }
+  }
+
   render() {
     const {session, data, followee} = this.props;
     const findFollowee = followee.find(item =>
@@ -81,6 +99,8 @@ class Post extends Component {
     if (data.writer === session.common_profile.username) {
       isFollow = true;
     }
+
+    console.log('post data: ', data);
 
     return (
       <div className="post">
@@ -98,6 +118,8 @@ class Post extends Component {
         <Icons
           onLikePost={this.handleLikePost}
           onUnLikePost={this.handleUnlikePost}
+          onAddBookmark={this.handleAddBookmark}
+          onDeleteBookmark={this.handleDeleteBookmark}
           session={session}
           like={data.post.likes}
           commentCount={data.comment_count}
@@ -121,6 +143,7 @@ class Post extends Component {
 Post.propTypes = {
   PostActions: React.PropTypes.object,
   FollowActions: React.PropTypes.object,
+  BookmarkActions: React.PropTypes.object,
   session: React.PropTypes.object,
   data: React.PropTypes.object,
   followee: React.PropTypes.array

@@ -5,13 +5,15 @@ import post from './post';
 import profile from './profile';
 import follow from './follow';
 import goal from './goal';
+import bookmark from './bookmark';
 
 const reducers = {
   auth,
   post,
   profile,
   follow,
-  goal
+  goal,
+  bookmark
 }
 
 export default combineReducers(reducers);

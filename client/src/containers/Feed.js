@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import * as auth from 'redux/modules/auth';
 import * as post from 'redux/modules/post';
 import * as follow from 'redux/modules/follow';
+import * as bookmark from 'redux/modules/bookmark';
 
 import { Post } from 'components';
 
@@ -40,7 +41,7 @@ class Feed extends Component {
   }
 
   render() {
-    const {PostActions, FollowActions} = this.props;
+    const {PostActions, FollowActions, BookmarkActions} = this.props;
     const data = this.props.status.post.toJS();
     const session = this.props.status.auth.getIn(['session']).toJS();
     const followee = this.props.status.follow.getIn(['followee']).toJS();
@@ -50,6 +51,7 @@ class Feed extends Component {
         <Post
           PostActions={PostActions}
           FollowActions={FollowActions}
+          BookmarkActions={BookmarkActions}
           followee={followee}
           session={session}
           data={post}
@@ -77,13 +79,15 @@ Feed = connect(
     status: {
       auth: state.auth,
       post: state.post,
-      follow: state.follow
+      follow: state.follow,
+      bookmark: state.bookmark
     }
   }),
   dispatch => ({
     AuthActions: bindActionCreators(auth, dispatch),
     PostActions: bindActionCreators(post, dispatch),
-    FollowActions: bindActionCreators(follow, dispatch)
+    FollowActions: bindActionCreators(follow, dispatch),
+    BookmarkActions: bindActionCreators(bookmark, dispatch)
   })
 )(Feed);
 

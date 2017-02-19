@@ -1,6 +1,14 @@
 import React from 'react';
 
-const Icons = ({onLikePost, onUnLikePost, session, like, commentCount}) => {
+const Icons = ({
+  onLikePost,
+  onUnLikePost,
+  onAddBookmark,
+  onDeleteBookmark,
+  session,
+  like,
+  commentCount
+}) => {
   const username = session.common_profile.username;
   const isLiked = like.indexOf(username) === -1 ? false : true;
 
@@ -24,7 +32,9 @@ const Icons = ({onLikePost, onUnLikePost, session, like, commentCount}) => {
       </div>
 
       <div className="bookmark-wrapper">
-        <i className="bookmark outline large icon"></i>
+        <i
+          onClick={onAddBookmark}
+          className="bookmark outline large icon"></i>
       </div>
 
       <div className="ui divider">
