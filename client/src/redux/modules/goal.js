@@ -6,6 +6,7 @@ import * as service from 'services/goal';
 
 /* actions */
 const WRITE_GOAL = requize('goal/WRITE_GOAL');
+const GET_GOAL = requize('goal/GET_GOAL');
 
 /* action creators */
 export const writeGoal = (title) => ({
@@ -15,11 +16,20 @@ export const writeGoal = (title) => ({
   }
 });
 
+export const getGoal = (username) => ({
+  type: GET_GOAL.DEFAULT,
+  payload: {
+    promise: service.getGoal({ username })
+  }
+});
+
 /* initialState */
 const initialState = Map({
   requests: Map({
-    writeGoal: Request()
-  })
+    writeGoal: Request(),
+    getGoal: Request()
+  }),
+  goal: List()
 });
 
 /* reducer */
@@ -31,12 +41,25 @@ export default handleActions({
   },
   [WRITE_GOAL.FULFILLED]: (state, action) => {
     const {data} = action.payload;
-    // const changed = state.updateIn(['followee'], list => list.push(data.data));
     return fulfill(state, 'writeGoal');
   },
   [WRITE_GOAL.REJECTED]: (state, action) => {
     const error = action.payload;
     return reject(state, 'writeGoal', error);
+  },
+
+  // GET GOAL
+  [GET_GOAL.PENDING]: (state, action) => {
+    return pend(state, 'getGoal');
+  },
+  [GET_GOAL.FULFILLED]: (state, action) => {
+    const {data} = action.payload;
+    const changed = state.set('goal', fromJS(data.data));
+    return fulfill(changed, 'getGoal');
+  },
+  [GET_GOAL.REJECTED]: (state, action) => {
+    const error = action.payload;
+    return reject(state, 'getGoal', error);
   },
 
 }, initialState);

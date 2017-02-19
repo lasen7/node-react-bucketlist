@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Year = () => {
+const Year = ({year}) => {
   return (
     <div className="year">
-      2016년
+      {year + '년'}
     </div>
   );
 };

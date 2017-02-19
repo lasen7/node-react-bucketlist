@@ -1,11 +1,11 @@
 import React from 'react';
 import { Checkbox } from 'semantic-ui-react'
 
-const CheckItem = () => {
+const CheckItem = ({data}) => {
   return (
     <div className="check-item">
       <Checkbox
-        label='This checkbox is read-only' />
+        label={data.title} />
     </div>
   );
 };

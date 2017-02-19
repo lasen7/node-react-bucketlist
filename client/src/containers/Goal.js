@@ -12,11 +12,11 @@ class Goal extends Component {
 
   async componentDidMount() {
     try {
-      this.checkSession();
+      await this.checkSession();
+      await this.getGoal();
     } catch (e) {
     }
   }
-
 
   checkSession = async () => {
     const {AuthActions} = this.props;
@@ -28,6 +28,12 @@ class Goal extends Component {
     if (!session._id) {
       this.context.router.push('/auth/signin');
     }
+  }
+
+  getGoal = async () => {
+    const {GoalActions} = this.props;
+    const session = this.props.status.auth.getIn(['session']).toJS();
+    await GoalActions.getGoal(session.common_profile.username);
   }
 
   render() {
@@ -42,7 +48,8 @@ class Goal extends Component {
 Goal = connect(
   state => ({
     status: {
-      auth: state.auth
+      auth: state.auth,
+      goal: state.goal
     }
   }),
   dispatch => ({

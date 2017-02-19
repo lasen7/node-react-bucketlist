@@ -12,3 +12,12 @@ export const writeGoal = ({
     data
   });
 };
+
+export const getGoal = ({
+  username
+}) => {
+  return request({
+    url: '/api/goal/' + username,
+    method: 'get'
+  });
+};
